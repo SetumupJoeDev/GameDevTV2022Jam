@@ -9,17 +9,17 @@ public class IngredientDispenser : MonoBehaviour
 
     public GameObject[] m_ingredientPool;
 
-    public string m_ingredientName;
+    public EIngredient m_ingredientType;
 
     private void Start( )
     {
         EventManager.m_eventManager.onKeyPress += DispenseIngredient;
     }
 
-    public void DispenseIngredient( string ingredientName )
+    public void DispenseIngredient( EIngredient ingredientName )
     {
 
-        if ( ingredientName == m_ingredientName )
+        if ( ingredientName == m_ingredientType )
         {
 
             foreach ( GameObject ingredient in m_ingredientPool )
