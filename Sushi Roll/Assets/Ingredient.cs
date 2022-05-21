@@ -16,7 +16,6 @@ public enum EIngredient : int
 }
 public class Ingredient : MonoBehaviour
 {
-
     private void OnTriggerEnter( Collider other )
     {
         if( other.gameObject.name == "Crusher" )
