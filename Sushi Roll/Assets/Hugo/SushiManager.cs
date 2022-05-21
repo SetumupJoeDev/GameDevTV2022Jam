@@ -107,7 +107,9 @@ public class SushiManager : MonoBehaviour
         {
             if(Input.GetKeyDown(input.InputKey))
             {
-                if(!_toInput.Remove(input.Ingredient))
+                EventManager.m_eventManager.OnKeyPress( input.Ingredient );
+
+                if (!_toInput.Remove(input.Ingredient))
                 {
                     _currentState = State.Failure;
                 }

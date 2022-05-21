@@ -13,9 +13,9 @@ public class EventManager : MonoBehaviour
         m_eventManager = this;
     }
 
-    public event Action<string> onKeyPress;
+    public event Action<EIngredient> onKeyPress;
 
-    public void OnKeyPress( string id )
+    public void OnKeyPress( EIngredient id )
     {
         if( onKeyPress != null )
         {
