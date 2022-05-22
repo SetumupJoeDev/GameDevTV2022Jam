@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UTicketUI : MonoBehaviour
 {
-    [SerializeField]
     private FTicket _ticket;
     [SerializeField]
     private List<FIngredientUIElement> IngredientUIList = new List<FIngredientUIElement>();
