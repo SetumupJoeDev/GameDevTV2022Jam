@@ -11,29 +11,31 @@ public struct FInputBindings
 
 public class SushiManager : MonoBehaviour
 {
+    [Header("Read-only")]
     [SerializeField]
     private List<FTicket> _ticketsList = new List<FTicket>();
     [SerializeField]
     private List<EIngredient> _toInput = new List<EIngredient>();
-    [SerializeField]
-    private int NumberOfIngredients = 3;
 
+    [Header("Tickets")]
+    [SerializeField]
+    private List<UTicketUI> _UITickets = new List<UTicketUI>();
+
+    [Header("Ticket animations")]
     [SerializeField]
     private List<RectTransform> _ticketPoints = new List<RectTransform>();
-
     [SerializeField]
     private float _ticketMoveSpeed = 0.5f;
+
+    [Header("Game Data")]
+    [SerializeField]
+    private Data GameData;
 
     // UI Ticket system junk
     private int _frontOfList = 0;
     private int _backOfList = 0;
-
-    [SerializeField]
-    private List<UTicketUI> _UITickets = new List<UTicketUI>();
-
-    [SerializeField]
-    private Data GameData;
-
+    
+    // UI Ticket animations
     private float T = 0f;
     private float MovingT = 0f;
 
@@ -67,7 +69,7 @@ public class SushiManager : MonoBehaviour
 
         UpdateToInput();
 
-        for(int i = 0; i < NumberOfIngredients; i++)
+        for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
             Debug.Log(_ticketsList[0].IngredientList[i]);
         }
@@ -149,7 +151,7 @@ public class SushiManager : MonoBehaviour
 
                 trans.anchoredPosition = new Vector2(Mathf.SmoothStep(initialPos.x, _ticketPoints[ticket.IndexInList].anchoredPosition.x, T), initialPos.y);
 
-                if (Mathf.Abs(trans.anchoredPosition.x - _ticketPoints[ticket.IndexInList].anchoredPosition.x) <= 0.01f)
+                if (Mathf.Abs(trans.anchoredPosition.x - _ticketPoints[ticket.IndexInList].anchoredPosition.x) <= 1f)
                 {
                     successes += 1;
 
@@ -158,10 +160,9 @@ public class SushiManager : MonoBehaviour
             }
             else
             {
-                initialPos = _ticketPoints[0].anchoredPosition;
-
                 if(trans.anchoredPosition.x == _ticketPoints[0].anchoredPosition.x)
                 {
+                    initialPos = _ticketPoints[0].anchoredPosition;
                     // Still going down
                     trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Mathf.SmoothStep(initialPos.y, _ticketPoints[0].anchoredPosition.y - 600, MovingT));
                     
@@ -172,8 +173,7 @@ public class SushiManager : MonoBehaviour
                         MovingT = 0f;
                     }
                 }
-                
-                if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
+                else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
                 {
                     initialPos = _ticketPoints[ticket.IndexInList].anchoredPosition;
                     trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Mathf.SmoothStep(initialPos.y - 600, initialPos.y, MovingT));
@@ -207,7 +207,7 @@ public class SushiManager : MonoBehaviour
     {
         FTicket NewTicket = new FTicket();
 
-        for(int i = 0; i < NumberOfIngredients; i++)
+        for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
             NewTicket.IngredientList.Add((EIngredient)Random.Range(0, 8));
         }

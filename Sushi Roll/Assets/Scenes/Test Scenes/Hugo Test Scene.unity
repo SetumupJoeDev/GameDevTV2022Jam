@@ -304,6 +304,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ticket4
       objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
 --- !u!224 &160981822 stripped
@@ -726,18 +734,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ticketsList: []
   _toInput: 
-  NumberOfIngredients: 3
-  _ticketPoints:
-  - {fileID: 362269085}
-  - {fileID: 152426459}
-  - {fileID: 706865165}
-  - {fileID: 114133999}
-  _ticketMoveSpeed: 0.5
   _UITickets:
   - {fileID: 95575656}
   - {fileID: 1278995704}
   - {fileID: 1172460420}
   - {fileID: 1061940354}
+  _ticketPoints:
+  - {fileID: 362269085}
+  - {fileID: 152426459}
+  - {fileID: 706865165}
+  - {fileID: 114133999}
+  _ticketMoveSpeed: 2.5
   GameData: {fileID: 11400000, guid: 2baedee110e48c14f911bb181ecabc19, type: 2}
 --- !u!4 &1384848561
 Transform:
@@ -848,6 +855,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ticket2
       objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
 --- !u!224 &1484441056 stripped
@@ -949,6 +964,14 @@ PrefabInstance:
     - target: {fileID: 8383358666177646147, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
       propertyPath: m_Name
       value: Ticket3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
@@ -1057,9 +1080,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!1 &2013859518
 GameObject:
@@ -1186,6 +1209,14 @@ PrefabInstance:
     - target: {fileID: 8383358666177646147, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
       propertyPath: m_Name
       value: Ticket1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383358666177646158, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d203bfaee054ad4cad4f3e8839b3586, type: 3}
