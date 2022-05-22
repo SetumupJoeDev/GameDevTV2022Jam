@@ -14,6 +14,7 @@ public enum EIngredient : int
     PickledGinger,
     GreenOnion
 }
+
 public class Ingredient : MonoBehaviour
 {
     private void OnTriggerEnter( Collider other )
