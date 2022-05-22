@@ -16,20 +16,12 @@ public enum EIngredient : int
 }
 public class Ingredient : MonoBehaviour
 {
-
-    public AudioClip m_hitSound;
-
     private void OnTriggerEnter( Collider other )
     {
         if( other.gameObject.name == "Crusher" )
         {
             gameObject.SetActive( false );
         }
-    }
-
-    private void OnCollisionEnter( Collision collision )
-    {
-        AudioSource.PlayClipAtPoint( m_hitSound, transform.position );
     }
 
 }
