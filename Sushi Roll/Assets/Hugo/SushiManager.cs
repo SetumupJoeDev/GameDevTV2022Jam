@@ -18,8 +18,11 @@ public class SushiManager : MonoBehaviour
     [SerializeField]
     private int NumberOfIngredients = 3;
 
+    //TEST
+    public UTicketUI UITicket;
+
     [SerializeField]
-    private List<FInputBindings> InputBindings = new List<FInputBindings>();
+    private Data GameData;
 
     private enum State : int
     {
@@ -33,6 +36,7 @@ public class SushiManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UITicket.Initialise();
         for(int i = 0; i < 4; i++)
         {
             GenerateTicket();
@@ -88,6 +92,8 @@ public class SushiManager : MonoBehaviour
         {
             _toInput.Add(ingredient);
         }
+
+        UITicket.AssignTicket(_ticketsList[0]);
     }
 
     private void GenerateTicket()
@@ -103,7 +109,7 @@ public class SushiManager : MonoBehaviour
 
     private void CheckInputs()
     {
-        foreach(FInputBindings input in InputBindings)
+        foreach(FInputBindings input in GameData.InputBindings)
         {
             if(Input.GetKeyDown(input.InputKey))
             {
@@ -114,6 +120,11 @@ public class SushiManager : MonoBehaviour
                     _currentState = State.Failure;
                 }
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            _currentState = State.Success;
         }
 
         CheckStatus();
