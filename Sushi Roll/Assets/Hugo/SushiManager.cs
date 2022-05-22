@@ -1,13 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public struct FInputBindings
-{
-    public EIngredient Ingredient;
-    public KeyCode InputKey;
-}
+using UnityEngine.Events;
 
 public class SushiManager : MonoBehaviour
 {
@@ -31,6 +25,16 @@ public class SushiManager : MonoBehaviour
     [SerializeField]
     private Data GameData;
 
+    [Header("Fail / Success events")]
+    public UnityEvent SuccessEvent;
+    public UnityEvent FailEvent;
+
+    [Header("Sushi")]
+    [SerializeField]
+    private SushiRoll Sushi;
+
+    private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
+
     // UI Ticket system junk
     private int _frontOfList = 0;
     private int _backOfList = 0;
@@ -52,6 +56,12 @@ public class SushiManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Populate material dictionary
+        foreach(FIngredientMaterials pair in GameData.IngredientMaterials)
+        {
+            _materialMap.Add(pair.Ingredient, pair.IngredientMaterial);
+        }
+
         _backOfList = _UITickets.Count - 1;
         for(int i = 0; i < GameData.NumberOfVisibleTickets; i++)
         {
@@ -59,6 +69,9 @@ public class SushiManager : MonoBehaviour
             {
                 _UITickets[i].Initialise(i);
                 _UITickets[i].AssignTicket(GenerateTicket());
+
+                // snap tickets to correct pos
+                _UITickets[i].gameObject.GetComponent<RectTransform>().anchoredPosition = _ticketPoints[i].anchoredPosition;
             }
             else
             {
@@ -96,15 +109,33 @@ public class SushiManager : MonoBehaviour
                 break;
 
             case State.AnimatingMovement:
-
                 if(AnimateTickets())
                 {
-                    AdvanceTickets();
                     _currentState = State.ReceivingInput;
                 }
                 break;
-
         }    
+    }
+
+    public void NextTicket()
+    {
+        // public call to advance tickets (switches to animating state)
+        UpdateTicketIndex();
+        _currentState = State.AnimatingMovement;
+
+        Debug.Log("External ticket progress");
+    }
+
+    public void CreateFinishedSushi()
+    {
+        List<Material> sushiMaterial = new List<Material>
+        {
+            _materialMap[_ticketsList[0].IngredientList[0]],
+            _materialMap[_ticketsList[0].IngredientList[1]],
+            _materialMap[_ticketsList[0].IngredientList[2]]
+        };
+
+        Sushi.FillSushi(sushiMaterial);
     }
 
     private void AdvanceTickets()
@@ -114,6 +145,7 @@ public class SushiManager : MonoBehaviour
         {
             _ticketsList.RemoveAt(0);
         }
+
         UpdateToInput();
 
         _backOfList += 1;
@@ -171,6 +203,8 @@ public class SushiManager : MonoBehaviour
                         // going up
                         trans.anchoredPosition = new Vector2(_ticketPoints[ticket.IndexInList].anchoredPosition.x, _ticketPoints[ticket.IndexInList].anchoredPosition.y - 600);
                         MovingT = 0f;
+
+                        AdvanceTickets();
                     }
                 }
                 else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
@@ -186,8 +220,6 @@ public class SushiManager : MonoBehaviour
                     }
                 }
             }
-
-
         }
 
         return successes == _UITickets.Count;
@@ -209,7 +241,7 @@ public class SushiManager : MonoBehaviour
 
         for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
-            NewTicket.IngredientList.Add((EIngredient)Random.Range(0, 8));
+            NewTicket.IngredientList.Add((EIngredient)Random.Range(0, GameData.NumberOfPossibleIngredients - 1));
         }
 
         _ticketsList.Add(NewTicket);
@@ -268,13 +300,15 @@ public class SushiManager : MonoBehaviour
     {
         // drop on plate
         UpdateTicketIndex();
-        Debug.Log("Success");
+        CreateFinishedSushi();
+        SuccessEvent.Invoke();
     }
 
     private void Failure()
     {
         // consume sushi
         UpdateTicketIndex();
-        Debug.Log("Failure");
+        CreateFinishedSushi();
+        FailEvent.Invoke();
     }
 }

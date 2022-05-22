@@ -4,15 +4,15 @@ using UnityEngine;
 
 public enum EIngredient : int
 {
-    Wasabi = 0,
-    Cucumber,
-    Avocardo,
+    Cucumber = 0,
+    SpringOnion,
+    Avocado,
+    Eel,
     Salmon,
-    Tofu,
     Tuna,
-    PoppySeeds,
-    PickledGinger,
-    GreenOnion
+    Mayo,
+    Tofu,
+    Egg
 }
 
 public class Ingredient : MonoBehaviour

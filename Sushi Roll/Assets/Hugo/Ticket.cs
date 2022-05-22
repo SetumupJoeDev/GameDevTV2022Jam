@@ -15,3 +15,17 @@ public struct FIngredientSprites
     public EIngredient Ingredient;
     public Sprite Icon;
 }
+
+[System.Serializable]
+public struct FIngredientMaterials
+{
+    public EIngredient Ingredient;
+    public Material IngredientMaterial;
+}
+
+[System.Serializable]
+public struct FInputBindings
+{
+    public EIngredient Ingredient;
+    public KeyCode InputKey;
+}
