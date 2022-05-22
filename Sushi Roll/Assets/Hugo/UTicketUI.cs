@@ -12,9 +12,12 @@ public class UTicketUI : MonoBehaviour
     [SerializeField]
     private Data GameData;
 
+    [HideInInspector]
+    public int IndexInList = 0;
+
     private Dictionary<EIngredient, Sprite> _TextureMap = new Dictionary<EIngredient, Sprite>();
 
-    public void Initialise()
+    public void Initialise(int Index)
     {
         // CHANGE TO [number of ingredients] LATER
         foreach(FIngredientUIElement IngredientEntry in IngredientUIList)
@@ -26,6 +29,8 @@ public class UTicketUI : MonoBehaviour
         {
             _TextureMap.Add(spriteMap.Ingredient, spriteMap.Icon);
         }
+
+        IndexInList = Index;
     }
 
     public void AssignTicket(FTicket Ticket)
@@ -56,7 +61,7 @@ public class UTicketUI : MonoBehaviour
 
         for (int i = 0; i < type.Count; i++)
         {
-            string text = "x" + quantities[i].ToString();
+            string text = "x " + quantities[i].ToString();
 
             IngredientUIList[i].PopulateIngredientInfo(text, _TextureMap[type[i]]);
         }

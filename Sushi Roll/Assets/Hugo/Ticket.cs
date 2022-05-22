@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class FTicket
 {
-    public EIngredient[] IngredientList = new EIngredient[3];
+    public List<EIngredient> IngredientList = new List<EIngredient>();
 }
 
 [System.Serializable]

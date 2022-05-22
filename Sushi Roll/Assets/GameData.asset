@@ -16,21 +16,21 @@ MonoBehaviour:
   - Ingredient: 0
     Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 1
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 2
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 3
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 4
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 5
     Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 6
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 7
     Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - Ingredient: 8
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   InputBindings:
   - Ingredient: 0
     InputKey: 49
