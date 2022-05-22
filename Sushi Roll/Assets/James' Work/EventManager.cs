@@ -15,11 +15,21 @@ public class EventManager : MonoBehaviour
 
     public event Action<EIngredient> onKeyPress;
 
-    public void OnKeyPress( EIngredient id )
+    public event Action onTimeUp;
+
+    public void KeyPress( EIngredient id )
     {
         if( onKeyPress != null )
         {
             onKeyPress( id );
+        }
+    }
+
+    public void TimeUp( )
+    {
+        if ( onTimeUp != null )
+        {
+            onTimeUp( );
         }
     }
 

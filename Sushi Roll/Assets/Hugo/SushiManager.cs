@@ -113,7 +113,7 @@ public class SushiManager : MonoBehaviour
         {
             if(Input.GetKeyDown(input.InputKey))
             {
-                EventManager.m_eventManager.OnKeyPress( input.Ingredient );
+                EventManager.m_eventManager.KeyPress( input.Ingredient );
 
                 if (!_toInput.Remove(input.Ingredient))
                 {
