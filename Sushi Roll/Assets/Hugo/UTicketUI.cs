@@ -4,27 +4,44 @@ using UnityEngine;
 
 public class UTicketUI : MonoBehaviour
 {
+    [SerializeField]
     private FTicket _ticket;
+    [SerializeField]
     private List<FIngredientUIElement> IngredientUIList = new List<FIngredientUIElement>();
 
     [SerializeField]
-    public List<FIngredientSprites> IngredientSprites = new List<FIngredientSprites>();
-    private Dictionary<EIngredient, Texture> _TextureMap = new Dictionary<EIngredient, Texture>();
+    private Data GameData;
 
-    public void Initialise()
+    [HideInInspector]
+    public int IndexInList = 0;
+
+    private Dictionary<EIngredient, Sprite> _TextureMap = new Dictionary<EIngredient, Sprite>();
+
+    public void Initialise(int Index)
     {
         // CHANGE TO [number of ingredients] LATER
+        foreach(FIngredientUIElement IngredientEntry in IngredientUIList)
+        {
+            IngredientEntry.HideIngredientInfo();
+        }
 
-        foreach (FIngredientSprites spriteMap in IngredientSprites)
+        foreach (FIngredientSprites spriteMap in GameData.IngredientSprites)
         {
             _TextureMap.Add(spriteMap.Ingredient, spriteMap.Icon);
         }
+
+        IndexInList = Index;
     }
 
     public void AssignTicket(FTicket Ticket)
     {
         List<EIngredient> type = new List<EIngredient>();
         List<int> quantities = new List<int>();
+
+        foreach(FIngredientUIElement UI in IngredientUIList)
+        {
+            UI.HideIngredientInfo();
+        }
 
         // this is dumb
 
@@ -38,13 +55,13 @@ public class UTicketUI : MonoBehaviour
             else
             {
                 int index = type.IndexOf(ingredient);
-                quantities[index] = quantities[index]++;
+                quantities[index] = quantities[index] + 1;
             }
         }
 
         for (int i = 0; i < type.Count; i++)
         {
-            string text = "X" + quantities[i].ToString();
+            string text = "x " + quantities[i].ToString();
 
             IngredientUIList[i].PopulateIngredientInfo(text, _TextureMap[type[i]]);
         }
