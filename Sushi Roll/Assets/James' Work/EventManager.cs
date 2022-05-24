@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour
 
     public event Action onTimeUp;
 
+    public event Action onRecipeSuccess;
+
     public void KeyPress( EIngredient id )
     {
         if( onKeyPress != null )
@@ -30,6 +32,14 @@ public class EventManager : MonoBehaviour
         if ( onTimeUp != null )
         {
             onTimeUp( );
+        }
+    }
+
+    public void RecipeSuccess( )
+    {
+        if( onRecipeSuccess != null )
+        {
+            onRecipeSuccess( );
         }
     }
 
