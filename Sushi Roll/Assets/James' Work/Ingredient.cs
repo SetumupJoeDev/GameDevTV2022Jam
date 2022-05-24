@@ -19,6 +19,7 @@ public class Ingredient : MonoBehaviour
 {
     private void OnTriggerEnter( Collider other )
     {
+        //If the ingredient hits the crusher, it is deactivated so it can be reused later
         if( other.gameObject.name == "Crusher" )
         {
             gameObject.SetActive( false );

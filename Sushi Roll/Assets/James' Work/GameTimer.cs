@@ -11,7 +11,7 @@ public class GameTimer : MonoBehaviour
     [Tooltip("The game UI manager.")]
     public UIManager m_uiManager;
 
-    private void Update( )
+    public void RunTimer( )
     {
         //Reduces the amount of time remaining by the time passed this frame
         m_timeRemaining -= Time.deltaTime;
