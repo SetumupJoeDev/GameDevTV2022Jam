@@ -11,6 +11,9 @@ public class UTicketUI : MonoBehaviour
     [SerializeField]
     private Data GameData;
 
+    [SerializeField]
+    private CanvasGroup TicketCG;
+
     [HideInInspector]
     public int IndexInList = 0;
 
@@ -18,8 +21,13 @@ public class UTicketUI : MonoBehaviour
 
     public void Initialise(int Index)
     {
+        TicketCG.blocksRaycasts = false;
+        TicketCG.interactable = false;
+
+        TicketCG.alpha = 1f;
+
         // CHANGE TO [number of ingredients] LATER
-        foreach(FIngredientUIElement IngredientEntry in IngredientUIList)
+        foreach (FIngredientUIElement IngredientEntry in IngredientUIList)
         {
             IngredientEntry.HideIngredientInfo();
         }
@@ -66,6 +74,11 @@ public class UTicketUI : MonoBehaviour
         }
 
         _ticket = Ticket;
+    }
+
+    public void Hide()
+    {
+        TicketCG.alpha = 0f;
     }
 
 }

@@ -383,13 +383,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e9d70299141841b1aab6fe3ada649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ticket:
-    IngredientList: 000000000000000000000000
   IngredientUIList:
   - {fileID: 8383358667054658656}
   - {fileID: 8383358666337773712}
   - {fileID: 8383358665324897225}
   GameData: {fileID: 11400000, guid: 2baedee110e48c14f911bb181ecabc19, type: 2}
+  TicketCG: {fileID: 8383358666177646158}
+  IndexInList: 0
 --- !u!225 &8383358666177646158
 CanvasGroup:
   m_ObjectHideFlags: 0
