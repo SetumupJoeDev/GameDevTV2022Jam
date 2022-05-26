@@ -157,6 +157,7 @@ public class SushiManager : MonoBehaviour
         { 
             List<Material> sushiMaterial = new List<Material>
             {
+                // hacky way to assign materials
                 _materialMap[_ticketsList[0].IngredientList[0]],
                 _materialMap[_ticketsList[0].IngredientList[1]],
                 _materialMap[_ticketsList[0].IngredientList[2]]
