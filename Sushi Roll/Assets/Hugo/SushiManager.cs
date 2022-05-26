@@ -281,7 +281,7 @@ public class SushiManager : MonoBehaviour
 
         for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
-            NewTicket.IngredientList.Add(_toUse[Random.Range(0, _toUse.Count - 1)]);
+            NewTicket.IngredientList.Add(_toUse[Random.Range(0, _toUse.Count)]);
         }
 
         _ticketsList.Add(NewTicket);
