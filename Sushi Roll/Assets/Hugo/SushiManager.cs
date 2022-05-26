@@ -63,7 +63,7 @@ public class SushiManager : MonoBehaviour
             _materialMap.Add(pair.Ingredient, pair.IngredientMaterial);
         }
 
-        BeginRound();
+        //BeginRound();
     }
 
     void Update()
@@ -89,6 +89,10 @@ public class SushiManager : MonoBehaviour
                 {
                     _currentState = State.ReceivingInput;
                 }
+                break;
+
+            case State.Idle:
+
                 break;
         }    
     }
@@ -135,14 +139,17 @@ public class SushiManager : MonoBehaviour
 
     public void CreateFinishedSushi()
     {
-        List<Material> sushiMaterial = new List<Material>
-        {
-            _materialMap[_ticketsList[0].IngredientList[0]],
-            _materialMap[_ticketsList[0].IngredientList[1]],
-            _materialMap[_ticketsList[0].IngredientList[2]]
-        };
+        if(Sushi != null)
+        { 
+            List<Material> sushiMaterial = new List<Material>
+            {
+                _materialMap[_ticketsList[0].IngredientList[0]],
+                _materialMap[_ticketsList[0].IngredientList[1]],
+                _materialMap[_ticketsList[0].IngredientList[2]]
+            };
 
-        Sushi.FillSushi(sushiMaterial);
+            Sushi.FillSushi(sushiMaterial);
+        }
     }
 
     public void AddIngredient(EIngredient ingredient)
