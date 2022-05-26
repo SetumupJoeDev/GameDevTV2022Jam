@@ -120,6 +120,8 @@ public class SushiManager : MonoBehaviour
         {
             _UITickets[i].Hide();
         }
+
+        _currentState = State.Idle;
     }
 
     public void NextTicket()
@@ -145,10 +147,13 @@ public class SushiManager : MonoBehaviour
 
     public void AddIngredient(EIngredient ingredient)
     {
-        // External Add Ingredient call (e.g. used on physical ingredients)
-        if (!_toInput.Remove(ingredient))
+        if(_currentState == State.ReceivingInput)
         {
-            _currentState = State.Failure;
+            // External Add Ingredient call (e.g. used on physical ingredients)
+            if (!_toInput.Remove(ingredient))
+            {
+                _currentState = State.Failure;
+            }
         }
     }
 
