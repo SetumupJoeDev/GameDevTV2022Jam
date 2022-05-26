@@ -379,71 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e9d70299141841b1aab6fe3ada649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1384848559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1384848561}
-  - component: {fileID: 1384848560}
-  m_Layer: 0
-  m_Name: Sushi Boss
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1384848560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384848559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dce89b06cd4b5e4e8f35cb5296f853a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ticketsList: []
-  _toInput: 
-  _toUse: 
-  _UITickets:
-  - {fileID: 95575656}
-  - {fileID: 1278995704}
-  - {fileID: 1172460420}
-  - {fileID: 1061940354}
-  _ticketPoints:
-  - {fileID: 362269085}
-  - {fileID: 152426459}
-  - {fileID: 706865165}
-  - {fileID: 114133999}
-  _ticketMoveSpeed: 1
-  GameData: {fileID: 11400000, guid: 2baedee110e48c14f911bb181ecabc19, type: 2}
-  SuccessEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  FailEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Sushi: {fileID: 5557504072856907359}
---- !u!4 &1384848561
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384848559}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &46303578875423627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +436,99 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90492d668ca02e948aaee597dd3cc77f, type: 3}
+--- !u!1001 &293592324284116586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 293592322966778565, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_Name
+      value: Sushi Boss NEW
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: Sushi
+      value: 
+      objectReference: {fileID: 5557504072856907359}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _UITickets.Array.data[0]
+      value: 
+      objectReference: {fileID: 95575656}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _UITickets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1278995704}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _UITickets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1172460420}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _UITickets.Array.data[3]
+      value: 
+      objectReference: {fileID: 1061940354}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _ticketPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 362269085}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _ticketPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 152426459}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _ticketPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 706865165}
+    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: _ticketPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 114133999}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 293592322966778587, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
 --- !u!1 &541052217642627596
 GameObject:
   m_ObjectHideFlags: 0
