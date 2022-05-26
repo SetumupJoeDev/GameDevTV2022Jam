@@ -23,10 +23,8 @@ public class UTicketUI : MonoBehaviour
     {
         TicketCG.blocksRaycasts = false;
         TicketCG.interactable = false;
-
         TicketCG.alpha = 1f;
 
-        // CHANGE TO [number of ingredients] LATER
         foreach (FIngredientUIElement IngredientEntry in IngredientUIList)
         {
             IngredientEntry.HideIngredientInfo();
@@ -68,7 +66,7 @@ public class UTicketUI : MonoBehaviour
 
         for (int i = 0; i < type.Count; i++)
         {
-            string text = "x " + quantities[i].ToString();
+            string text = "x " + quantities[i].ToString() + " | " + ((int)type[i] + 1);
 
             IngredientUIList[i].PopulateIngredientInfo(text, _TextureMap[type[i]]);
         }
