@@ -241,7 +241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timerText: {fileID: 2014179911}
   m_timeUpText: {fileID: 541847529}
-  m_timeUpAnimator: {fileID: 541847526}
 --- !u!114 &326830587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2140,6 +2139,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2205210699334431669, guid: 2a0f3fbcd05d13e4984a0b32136d124d, type: 3}
+      propertyPath: GameData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2baedee110e48c14f911bb181ecabc19, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0f3fbcd05d13e4984a0b32136d124d, type: 3}
 --- !u!1 &1500612832

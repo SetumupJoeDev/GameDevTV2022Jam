@@ -12,6 +12,19 @@ public class UIManager : MonoBehaviour
     [Tooltip("The text used to inform the player that their time us up.")]
     public TextMeshProUGUI m_timeUpText;
 
+    #region Menu Animators
+
+    [Header("Menu Animators")]
+
+    public Animator m_optionsMenu;
+
+    public Animator m_mainMenu;
+
+    public Animator m_levelSelect;
+
+    public Animator m_pauseMenu;
+
+    #endregion 
 
     private void Start( )
     {
@@ -31,5 +44,32 @@ public class UIManager : MonoBehaviour
         m_timeUpText.gameObject.SetActive( true );
 
     }
+
+    public void ToggleCanvasGroup( bool enabled, CanvasGroup canvas )
+    {
+        if ( enabled )
+        {
+            //Sets the canvas' alpha to 1 so it is visible
+            canvas.alpha = 1;
+
+            //Sets the canvas to be interactable so any buttons or sliders can be used by the player
+            canvas.interactable = true;
+        }
+        else
+        {
+            //Sets the canvas' alpha to 0 so it is no longer visible
+            canvas.alpha = 0;
+
+            //Sets the canvas to not be interactable so buttons and sliders cannot be used
+            canvas.interactable = false;
+        }
+    }
+
+    public void ExitMainMenu( )
+    {
+        m_mainMenu.SetTrigger( "ExitMenu" );
+    }
+
+
 
 }
