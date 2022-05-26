@@ -19,6 +19,8 @@ public class EventManager : MonoBehaviour
 
     public event Action onRecipeSuccess;
 
+    public event Action onMenuAnimationComplete;
+
     public void KeyPress( EIngredient id )
     {
         if( onKeyPress != null )
@@ -40,6 +42,14 @@ public class EventManager : MonoBehaviour
         if( onRecipeSuccess != null )
         {
             onRecipeSuccess( );
+        }
+    }
+
+    public void MenuAnimationComplete( )
+    {
+        if( onMenuAnimationComplete != null )
+        {
+            onMenuAnimationComplete( );
         }
     }
 
