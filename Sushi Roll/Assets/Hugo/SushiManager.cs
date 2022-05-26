@@ -10,6 +10,8 @@ public class SushiManager : MonoBehaviour
     private List<FTicket> _ticketsList = new List<FTicket>();
     [SerializeField]
     private List<EIngredient> _toInput = new List<EIngredient>();
+    [SerializeField]
+    private List<EIngredient> _toUse = new List<EIngredient>();
 
     [Header("Tickets")]
     [SerializeField]
@@ -63,6 +65,11 @@ public class SushiManager : MonoBehaviour
             _materialMap.Add(pair.Ingredient, pair.IngredientMaterial);
         }
 
+        foreach(UTicketUI ticket in _UITickets)
+        {
+            ticket.Hide();
+        }
+
         //BeginRound();
     }
 
@@ -93,13 +100,20 @@ public class SushiManager : MonoBehaviour
 
             case State.Idle:
 
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    BeginRound(GameData.ActiveIngredients);
+                }
+
                 break;
         }    
     }
 
-    public void BeginRound()
+    public void BeginRound(List<EIngredient> ingredientsToUse)
     {
         // External "start" func.
+        _toUse.Clear();
+        _toUse = ingredientsToUse;
 
         _ticketsList.Clear();
 
@@ -191,9 +205,9 @@ public class SushiManager : MonoBehaviour
 
     private bool AnimateTickets()
     {
-        T = T + (Time.deltaTime * _ticketMoveSpeed);
+        T += (Time.deltaTime * _ticketMoveSpeed);
 
-        MovingT = MovingT + (Time.deltaTime * _ticketMoveSpeed * 2);
+        MovingT += (Time.deltaTime * _ticketMoveSpeed * 2);
 
         int successes = 0;
 
@@ -267,7 +281,7 @@ public class SushiManager : MonoBehaviour
 
         for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
-            NewTicket.IngredientList.Add((EIngredient)Random.Range(0, GameData.NumberOfPossibleIngredients - 1));
+            NewTicket.IngredientList.Add(_toUse[Random.Range(0, _toUse.Count - 1)]);
         }
 
         _ticketsList.Add(NewTicket);
@@ -329,6 +343,8 @@ public class SushiManager : MonoBehaviour
         UpdateTicketIndex();
         CreateFinishedSushi();
         SuccessEvent.Invoke();
+
+        Debug.LogError("Success");
     }
 
     private void Failure()
@@ -337,5 +353,7 @@ public class SushiManager : MonoBehaviour
         UpdateTicketIndex();
         CreateFinishedSushi();
         FailEvent.Invoke();
+
+        Debug.LogError("Failed");
     }
 }
