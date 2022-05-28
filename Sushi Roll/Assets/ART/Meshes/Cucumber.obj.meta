@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ebd45c70a0a6c5e4cbe0f4e3fc488a43
+guid: f66dc5eabf9d28c4f989ab1b3151092b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Chameleon_ChameleonMat
-    second: {fileID: 2100000, guid: 1b8e709a122732840805bbac0f8e0c16, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Chameleon_Eye_ChameleonMat
-    second: {fileID: 2100000, guid: 1b8e709a122732840805bbac0f8e0c16, type: 2}
+      name: Cucumber_IngredientsMat
+    second: {fileID: 2100000, guid: 5a5f23f14a5d1c54f989abb6f5893a11, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

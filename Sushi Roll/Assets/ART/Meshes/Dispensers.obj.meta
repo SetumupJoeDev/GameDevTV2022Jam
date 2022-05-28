@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 34f68588d6350494fb13b63470e62f18
+guid: 94336d9cdcbb5d74c81b30475292803e
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,78 +7,48 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Cucumber_IngredientsMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispenser_Cucumber_DispensersMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: FinishedIngredient_01Mat
-    second: {fileID: 2100000, guid: b10478b14dca6a24bb6e5fb438eb11a2, type: 2}
+      name: Dispensers_Dispenser_AvocadoMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: FinishedIngredient_02Mat
-    second: {fileID: 2100000, guid: 788645ea152266a46a43e5ac3b828104, type: 2}
+      name: Dispensers_Dispenser_EelMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: FinishedIngredient_03Mat
-    second: {fileID: 2100000, guid: 5a7608a5e1ea93948b295b44778c4b69, type: 2}
+      name: Dispensers_Dispenser_EggMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ingredients_AvocadoMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispensers_Dispenser_MayoMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ingredients_EelMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispensers_Dispenser_SalmonMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ingredients_EggMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispensers_Dispenser_SpringOnionMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ingredients_MayoMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispensers_Dispenser_TofuMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ingredients_SalmonMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ingredients_SpringOnionMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ingredients_TofuMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ingredients_TunaMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Soy_SauceMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: SushiRollMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: VinegarMat
-    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
+      name: Dispensers_Dispenser_TunaMat
+    second: {fileID: 2100000, guid: c7eb08aa10696ff418269c1052ba525f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
