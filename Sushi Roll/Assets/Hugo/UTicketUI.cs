@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class UTicketUI : MonoBehaviour
 {
-    [SerializeField]
     private FTicket _ticket;
     [SerializeField]
     private List<FIngredientUIElement> IngredientUIList = new List<FIngredientUIElement>();
 
     [SerializeField]
     private Data GameData;
+
+    [SerializeField]
+    private CanvasGroup TicketCG;
 
     [HideInInspector]
     public int IndexInList = 0;
@@ -19,8 +21,11 @@ public class UTicketUI : MonoBehaviour
 
     public void Initialise(int Index)
     {
-        // CHANGE TO [number of ingredients] LATER
-        foreach(FIngredientUIElement IngredientEntry in IngredientUIList)
+        TicketCG.blocksRaycasts = false;
+        TicketCG.interactable = false;
+        TicketCG.alpha = 1f;
+
+        foreach (FIngredientUIElement IngredientEntry in IngredientUIList)
         {
             IngredientEntry.HideIngredientInfo();
         }
@@ -61,12 +66,17 @@ public class UTicketUI : MonoBehaviour
 
         for (int i = 0; i < type.Count; i++)
         {
-            string text = "x " + quantities[i].ToString();
+            string text = "x " + quantities[i].ToString() + " | " + ((int)type[i] + 1);
 
             IngredientUIList[i].PopulateIngredientInfo(text, _TextureMap[type[i]]);
         }
 
         _ticket = Ticket;
+    }
+
+    public void Hide()
+    {
+        TicketCG.alpha = 0f;
     }
 
 }

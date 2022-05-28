@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f66dc5eabf9d28c4f989ab1b3151092b
+guid: 87868fa8138765841b955c17e5e89cf2
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Cucumber_IngredientsMat
-    second: {fileID: 2100000, guid: 5a5f23f14a5d1c54f989abb6f5893a11, type: 2}
+      name: SpringOnion_IngredientsMat
+    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

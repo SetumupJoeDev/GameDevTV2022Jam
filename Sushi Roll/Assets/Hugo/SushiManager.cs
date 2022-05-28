@@ -1,39 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public struct FInputBindings
-{
-    public EIngredient Ingredient;
-    public KeyCode InputKey;
-}
+using UnityEngine.Events;
 
 public class SushiManager : MonoBehaviour
 {
+    [Header("Read-only")]
     [SerializeField]
     private List<FTicket> _ticketsList = new List<FTicket>();
     [SerializeField]
     private List<EIngredient> _toInput = new List<EIngredient>();
     [SerializeField]
-    private int NumberOfIngredients = 3;
+    private List<EIngredient> _toUse = new List<EIngredient>();
 
+    [Header("Tickets")]
+    [SerializeField]
+    private List<UTicketUI> _UITickets = new List<UTicketUI>();
+
+    [Header("Ticket animations")]
     [SerializeField]
     private List<RectTransform> _ticketPoints = new List<RectTransform>();
-
     [SerializeField]
     private float _ticketMoveSpeed = 0.5f;
+
+    [Header("Game Data")]
+    [SerializeField]
+    private Data GameData;
+
+    [Header("Fail / Success events")]
+    public UnityEvent SuccessEvent;
+    public UnityEvent FailEvent;
+
+    [Header("Sushi")]
+    [SerializeField]
+    private SushiRoll Sushi;
+
+    private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
 
     // UI Ticket system junk
     private int _frontOfList = 0;
     private int _backOfList = 0;
-
-    [SerializeField]
-    private List<UTicketUI> _UITickets = new List<UTicketUI>();
-
-    [SerializeField]
-    private Data GameData;
-
+    
+    // UI Ticket animations
     private float T = 0f;
     private float MovingT = 0f;
 
@@ -42,39 +50,29 @@ public class SushiManager : MonoBehaviour
         ReceivingInput,
         Success,
         Failure,
-        AnimatingMovement
+        AnimatingMovement,
+        Idle,
     }
 
     private State _currentState = State.ReceivingInput;
 
-    // Start is called before the first frame update
     void Start()
     {
-        _backOfList = _UITickets.Count - 1;
-        for(int i = 0; i < GameData.NumberOfVisibleTickets; i++)
+        _currentState = State.Idle;
+
+        foreach (FIngredientMaterials pair in GameData.IngredientMaterials)
         {
-            if(_UITickets.Count - 1 >= i)
-            {
-                _UITickets[i].Initialise(i);
-                _UITickets[i].AssignTicket(GenerateTicket());
-            }
-            else
-            {
-                // we have an issue
-            }
-            
+            _materialMap.Add(pair.Ingredient, pair.IngredientMaterial);
         }
 
-        UpdateToInput();
-
-        for(int i = 0; i < NumberOfIngredients; i++)
+        foreach(UTicketUI ticket in _UITickets)
         {
-            Debug.Log(_ticketsList[0].IngredientList[i]);
+            ticket.Hide();
         }
-        
+
+        //BeginRound();
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch(_currentState)
@@ -94,24 +92,101 @@ public class SushiManager : MonoBehaviour
                 break;
 
             case State.AnimatingMovement:
-
                 if(AnimateTickets())
                 {
-                    AdvanceTickets();
                     _currentState = State.ReceivingInput;
                 }
                 break;
 
+            case State.Idle:
+
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    BeginRound(GameData.ActiveIngredients);
+                }
+
+                break;
         }    
+    }
+
+    public void BeginRound(List<EIngredient> ingredientsToUse)
+    {
+        // External "start" func.
+        _toUse.Clear();
+        _toUse = ingredientsToUse;
+
+        _ticketsList.Clear();
+
+        _backOfList = _UITickets.Count - 1;
+        for(int i = 0; i < GameData.NumberOfVisibleTickets; i++)
+        {
+            _UITickets[i].Initialise(i);
+            _UITickets[i].AssignTicket(GenerateTicket());
+
+            // snap tickets to correct pos
+            _UITickets[i].gameObject.GetComponent<RectTransform>().anchoredPosition = _ticketPoints[i].anchoredPosition;
+        }
+
+        UpdateToInput();
+
+        _currentState = State.ReceivingInput;
+    }
+
+    public void EndRound()
+    {
+        for (int i = 0; i < GameData.NumberOfVisibleTickets; i++)
+        {
+            _UITickets[i].Hide();
+        }
+
+        _currentState = State.Idle;
+    }
+
+    public void NextTicket()
+    {
+        // public call to advance tickets (switches to animating state)
+        UpdateTicketIndex();
+        _currentState = State.AnimatingMovement;
+
+        Debug.Log("External ticket progress");
+    }
+
+    public void CreateFinishedSushi()
+    {
+        if(Sushi != null)
+        { 
+            List<Material> sushiMaterial = new List<Material>
+            {
+                // hacky way to assign materials
+                _materialMap[_ticketsList[0].IngredientList[0]],
+                _materialMap[_ticketsList[0].IngredientList[1]],
+                _materialMap[_ticketsList[0].IngredientList[2]]
+            };
+
+            Sushi.FillSushi(sushiMaterial);
+        }
+    }
+
+    public void AddIngredient(EIngredient ingredient)
+    {
+        if(_currentState == State.ReceivingInput)
+        {
+            // External Add Ingredient call (e.g. used on physical ingredients)
+            if (!_toInput.Remove(ingredient))
+            {
+                _currentState = State.Failure;
+            }
+        }
     }
 
     private void AdvanceTickets()
     {
-        // remove old first and replace w/ one at end
+        // Circular list shite
         if(_ticketsList.Count != 0)
         {
             _ticketsList.RemoveAt(0);
         }
+
         UpdateToInput();
 
         _backOfList += 1;
@@ -131,9 +206,9 @@ public class SushiManager : MonoBehaviour
 
     private bool AnimateTickets()
     {
-        T = T + (Time.deltaTime * _ticketMoveSpeed);
+        T += (Time.deltaTime * _ticketMoveSpeed);
 
-        MovingT = MovingT + (Time.deltaTime * _ticketMoveSpeed * 2);
+        MovingT += (Time.deltaTime * _ticketMoveSpeed * 2);
 
         int successes = 0;
 
@@ -149,7 +224,7 @@ public class SushiManager : MonoBehaviour
 
                 trans.anchoredPosition = new Vector2(Mathf.SmoothStep(initialPos.x, _ticketPoints[ticket.IndexInList].anchoredPosition.x, T), initialPos.y);
 
-                if (Mathf.Abs(trans.anchoredPosition.x - _ticketPoints[ticket.IndexInList].anchoredPosition.x) <= 0.01f)
+                if (Mathf.Abs(trans.anchoredPosition.x - _ticketPoints[ticket.IndexInList].anchoredPosition.x) <= 1f)
                 {
                     successes += 1;
 
@@ -158,10 +233,9 @@ public class SushiManager : MonoBehaviour
             }
             else
             {
-                initialPos = _ticketPoints[0].anchoredPosition;
-
                 if(trans.anchoredPosition.x == _ticketPoints[0].anchoredPosition.x)
                 {
+                    initialPos = _ticketPoints[0].anchoredPosition;
                     // Still going down
                     trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Mathf.SmoothStep(initialPos.y, _ticketPoints[0].anchoredPosition.y - 600, MovingT));
                     
@@ -170,10 +244,11 @@ public class SushiManager : MonoBehaviour
                         // going up
                         trans.anchoredPosition = new Vector2(_ticketPoints[ticket.IndexInList].anchoredPosition.x, _ticketPoints[ticket.IndexInList].anchoredPosition.y - 600);
                         MovingT = 0f;
+
+                        AdvanceTickets();
                     }
                 }
-                
-                if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
+                else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
                 {
                     initialPos = _ticketPoints[ticket.IndexInList].anchoredPosition;
                     trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, Mathf.SmoothStep(initialPos.y - 600, initialPos.y, MovingT));
@@ -186,8 +261,6 @@ public class SushiManager : MonoBehaviour
                     }
                 }
             }
-
-
         }
 
         return successes == _UITickets.Count;
@@ -207,9 +280,9 @@ public class SushiManager : MonoBehaviour
     {
         FTicket NewTicket = new FTicket();
 
-        for(int i = 0; i < NumberOfIngredients; i++)
+        for(int i = 0; i < GameData.NumberOfIngredients; i++)
         {
-            NewTicket.IngredientList.Add((EIngredient)Random.Range(0, 8));
+            NewTicket.IngredientList.Add(_toUse[Random.Range(0, _toUse.Count)]);
         }
 
         _ticketsList.Add(NewTicket);
@@ -222,7 +295,7 @@ public class SushiManager : MonoBehaviour
         {
             if(Input.GetKeyDown(input.InputKey))
             {
-                //EventManager.m_eventManager.OnKeyPress( input.Ingredient );
+                EventManager.m_eventManager.KeyPress( input.Ingredient );
 
                 if (!_toInput.Remove(input.Ingredient))
                 {
@@ -243,6 +316,7 @@ public class SushiManager : MonoBehaviour
     {
         if(_toInput.Count == 0 && _currentState == State.ReceivingInput)
         {
+            // Assumes success when all ingredients are successfully input (no more looked for)
             _currentState = State.Success;
         }
     }
@@ -268,13 +342,19 @@ public class SushiManager : MonoBehaviour
     {
         // drop on plate
         UpdateTicketIndex();
-        Debug.Log("Success");
+        CreateFinishedSushi();
+        SuccessEvent.Invoke();
+
+        Debug.LogError("Success");
     }
 
     private void Failure()
     {
         // consume sushi
         UpdateTicketIndex();
-        Debug.Log("Failure");
+        CreateFinishedSushi();
+        FailEvent.Invoke();
+
+        Debug.LogError("Failed");
     }
 }

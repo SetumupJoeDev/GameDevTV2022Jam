@@ -50,3 +50,26 @@ MonoBehaviour:
     InputKey: 56
   - Ingredient: 8
     InputKey: 57
+  IngredientMaterials:
+  - Ingredient: 0
+    IngredientMaterial: {fileID: 2100000, guid: 788645ea152266a46a43e5ac3b828104, type: 2}
+  - Ingredient: 1
+    IngredientMaterial: {fileID: 2100000, guid: dda0fe6c5b654fe43bd7c7d3bc92465b, type: 2}
+  - Ingredient: 2
+    IngredientMaterial: {fileID: 2100000, guid: b10478b14dca6a24bb6e5fb438eb11a2, type: 2}
+  - Ingredient: 3
+    IngredientMaterial: {fileID: 2100000, guid: 5a7608a5e1ea93948b295b44778c4b69, type: 2}
+  - Ingredient: 4
+    IngredientMaterial: {fileID: 2100000, guid: 087daedd7934b364291c0d392878b01e, type: 2}
+  - Ingredient: 5
+    IngredientMaterial: {fileID: 2100000, guid: ae9436fe58444054ebc6913c4db44fb0, type: 2}
+  - Ingredient: 6
+    IngredientMaterial: {fileID: 2100000, guid: 65add8249a36d07419c82a782f0de71f, type: 2}
+  - Ingredient: 7
+    IngredientMaterial: {fileID: 2100000, guid: fff5f98991c9e374e9e81cb7eee84498, type: 2}
+  - Ingredient: 8
+    IngredientMaterial: {fileID: 2100000, guid: b95b989dc88428f4181caecde95c68f3, type: 2}
+  NumberOfVisibleTickets: 4
+  NumberOfIngredients: 3
+  NumberOfPossibleIngredients: 9
+  ActiveIngredients: 000000000100000002000000030000000400000005000000060000000700000008000000
