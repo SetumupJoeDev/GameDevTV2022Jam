@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Soy_SauceMat
-    second: {fileID: 2100000, guid: 5a5f23f14a5d1c54f989abb6f5893a11, type: 2}
+    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
