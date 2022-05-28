@@ -6,7 +6,17 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chameleon1
+    second: {fileID: 2100000, guid: 1b8e709a122732840805bbac0f8e0c16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sushi
+    second: {fileID: 2100000, guid: 6cdfad6dd524f2b4e8280f90aa539433, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
