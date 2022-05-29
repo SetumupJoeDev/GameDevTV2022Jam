@@ -31,9 +31,14 @@ public class GameFlowManager : MonoBehaviour
 
     #endregion
 
+    public bool m_hasNavigated = false;
+
     private void Start( )
     {
 
+        EventManager.m_eventManager.onMenuAnimationComplete += EnterNewMenu;
+
+        m_currentGameState = GameState.inMainMenu;
 
     }
 
@@ -86,7 +91,31 @@ public class GameFlowManager : MonoBehaviour
     public void EnterMainMenu( )
     {
 
-        
+        switch ( m_currentGameState )
+        {
+            case ( GameState.inOptions ):
+                {
+                    m_uiManager.ExitOptionsMenu( );
+                    break;
+                }
+            case ( GameState.inLevelSelection ):
+                {
+                    m_uiManager.ExitLevelSelect( );
+                    break;
+                }
+            case ( GameState.inPauseMenu ):
+                {
+                    //Do stuff
+                    break;
+                }
+            default:
+                {
+                    Debug.LogError( "No transition found!" );
+                    break;
+                }
+        }
+
+        m_currentGameState = GameState.inMainMenu;
 
     }
 
@@ -97,32 +126,40 @@ public class GameFlowManager : MonoBehaviour
 
         m_currentGameState = GameState.inOptions;
 
+        m_hasNavigated = true;
+
     }
 
-    public void EnterNewMenu( )
+    public void EnterLevelSelect( )
     {
-        switch ( m_currentGameState )
+        m_uiManager.ExitMainMenu( );
+
+        m_hasNavigated = true;
+    }
+
+    private void EnterNewMenu( string id )
+    {
+        if ( m_hasNavigated )
         {
-            case GameState.inMainMenu:
-                {
 
-                    break;
-                }
-            case GameState.inOptions:
-                {
-                    //m_uiManager.EnterOptionsMenu( );
-                    break;
-                }
-            case GameState.inLevelSelection:
-                {
-
-                    break;
-                }
-            case GameState.inPauseMenu:
-                {
-
-                    break;
-                }
+            switch ( m_currentGameState )
+            {
+                case ( GameState.inMainMenu ):
+                    {
+                        m_uiManager.EnterMainMenu( );
+                        break;
+                    }
+                case ( GameState.inOptions ):
+                    {
+                        m_uiManager.EnterOptionsMenu( );
+                        break;
+                    }
+                case ( GameState.inLevelSelection ):
+                    {
+                        m_uiManager.EnterLevelSelect( );
+                        break;
+                    }
+            }
         }
     }
 

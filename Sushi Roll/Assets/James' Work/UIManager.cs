@@ -24,7 +24,17 @@ public class UIManager : MonoBehaviour
 
     public Animator m_pauseMenu;
 
-    #endregion 
+    #endregion
+
+    #region Menu Canvas Groups
+
+    public CanvasGroup m_mainMenuCanvas;
+
+    public CanvasGroup m_optionsMenuCanvas;
+
+    public CanvasGroup m_levelSelectCanvas;
+
+    #endregion
 
     private void Start( )
     {
@@ -70,6 +80,65 @@ public class UIManager : MonoBehaviour
         m_mainMenu.SetTrigger( "ExitMenu" );
     }
 
+    public void EnterMainMenu( )
+    {
+        m_mainMenuCanvas.alpha = 1;
+        m_mainMenuCanvas.interactable = true;
 
+        m_optionsMenu.ResetTrigger( "EnterMenu" );
+        m_mainMenu.SetTrigger( "EnterMenu" );
+    }
+
+    public void EnterOptionsMenu( )
+    {
+        m_optionsMenuCanvas.alpha = 1;
+        m_optionsMenuCanvas.interactable = true;
+
+        m_mainMenu.ResetTrigger( "ExitMenu" );
+        m_optionsMenu.SetTrigger( "EnterMenu" );
+    }
+
+    public void ExitOptionsMenu( )
+    {
+        m_optionsMenu.SetTrigger( "ExitMenu" );
+    }
+
+    public void EnterLevelSelect( )
+    {
+        m_levelSelectCanvas.alpha = 1;
+        m_levelSelectCanvas.interactable = true;
+
+        m_levelSelect.SetTrigger( "EnterMenu" );
+    }
+
+    public void ExitLevelSelect( )
+    {
+        m_levelSelect.SetTrigger( "ExitMenu" );
+    }
+
+    public void HideCanvas( string id )
+    {
+        switch ( id )
+        {
+            case ( "MainMenu" ):
+                {
+                    m_mainMenuCanvas.alpha = 0;
+                    m_mainMenuCanvas.interactable = false;
+                    break;
+                }
+            case ( "OptionsMenu" ):
+                {
+                    m_optionsMenuCanvas.alpha = 0;
+                    m_mainMenuCanvas.interactable = false;
+                    break;
+                }
+            case ( "LevelSelect" ):
+                {
+                    m_levelSelectCanvas.alpha = 0;
+                    m_levelSelectCanvas.interactable = false;
+                    break;
+                }
+        }
+    }
 
 }

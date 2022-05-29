@@ -19,7 +19,7 @@ public class EventManager : MonoBehaviour
 
     public event Action onRecipeSuccess;
 
-    public event Action onMenuAnimationComplete;
+    public event Action<string> onMenuAnimationComplete;
 
     public void KeyPress( EIngredient id )
     {
@@ -45,11 +45,11 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void MenuAnimationComplete( )
+    public void MenuAnimationComplete( string id )
     {
         if( onMenuAnimationComplete != null )
         {
-            onMenuAnimationComplete( );
+            onMenuAnimationComplete( id );
         }
     }
 

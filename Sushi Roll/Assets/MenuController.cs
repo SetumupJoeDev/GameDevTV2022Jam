@@ -5,10 +5,12 @@ using UnityEngine;
 public class MenuController : MonoBehaviour
 {
 
+    public string m_menuID;
+
     // Update is called once per frame
     public void AnimationComplete()
     {
-        EventManager.m_eventManager.MenuAnimationComplete( );
+        EventManager.m_eventManager.MenuAnimationComplete( m_menuID );
     }
 
 }
