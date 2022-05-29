@@ -130,7 +130,6 @@ public class SushiManager : MonoBehaviour
             case State.AnimatingMovement:
                 if(AnimateTickets())
                 {
-                    DisableAllIngredients();
                     _currentState = State.ReceivingInput;
                 }
                 break;
@@ -217,8 +216,10 @@ public class SushiManager : MonoBehaviour
         }
     }
 
-    public void DisableAllIngredients()
+    public IEnumerator DisableAllIngredients()
     {
+        yield return new WaitForSeconds(0.5f);
+        
         foreach (IngredientDispenser dispenser in _dispensers)
         {
             dispenser.DisableAll();
@@ -422,7 +423,6 @@ public class SushiManager : MonoBehaviour
     {
         // consume sushi
         FailEvent.Invoke();
-        _chameleonAnimator.SetTrigger("CurlSushi");
 
         Debug.LogError("Failed");
     }
@@ -431,6 +431,8 @@ public class SushiManager : MonoBehaviour
     {
         UpdateTicketIndex();
         _chameleonAnimator.SetTrigger("CurlSushi");
+
+        StartCoroutine("DisableAllIngredients");
 
         _currentState = State.AnimatingMovement;
     }
