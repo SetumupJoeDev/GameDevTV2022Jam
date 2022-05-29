@@ -6,12 +6,11 @@ using UnityEngine.Events;
 public class SushiManager : MonoBehaviour
 {
     [Header("Read-only")]
-    [SerializeField]
     private List<FTicket> _ticketsList = new List<FTicket>();
-    [SerializeField]
     private List<EIngredient> _toInput = new List<EIngredient>();
-    [SerializeField]
     private List<EIngredient> _toUse = new List<EIngredient>();
+
+    private List<EIngredient> _hasInput = new List<EIngredient>();
 
     [Header("Tickets")]
     [SerializeField]
@@ -50,7 +49,6 @@ public class SushiManager : MonoBehaviour
     private float _hackySushiTimeToAppear = 0.75f;
     private float _hackySushiTimer = 0f;
     private bool _hackyWaitingForSushi = false;
-
 
     private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
 
@@ -192,16 +190,27 @@ public class SushiManager : MonoBehaviour
         if(Sushi != null)
         {
             Sushi.gameObject.SetActive(true);
-            List<Material> sushiMaterial = new List<Material>
+            List<Material> sushiMaterial = new List<Material>();
+            //{
+            //    _materialMap[_sushiIngredients[0]],
+            //    _materialMap[_sushiIngredients[1]],
+            //    _materialMap[_sushiIngredients[2]]
+            //};
+            int use = 0;
+            for(int i = 0; i < 3; i++)
             {
-                // hacky way to assign materials
-                _materialMap[_sushiIngredients[0]],
-                _materialMap[_sushiIngredients[1]],
-                _materialMap[_sushiIngredients[2]]
-            };
+                sushiMaterial.Add(_materialMap[_hasInput[use]]);
+                use++;
+                if(use == _hasInput.Count)
+                {
+                    use = 0;
+                }
+            }
 
             Sushi.FillSushi(sushiMaterial);
         }
+
+        _hasInput.Clear();
     }
 
     public void AddIngredient(EIngredient ingredient)
@@ -347,6 +356,8 @@ public class SushiManager : MonoBehaviour
             if(Input.GetKeyDown(input.InputKey))
             {
                 EventManager.m_eventManager.KeyPress( input.Ingredient );
+
+                _hasInput.Add(input.Ingredient);
 
                 if (!_toInput.Remove(input.Ingredient))
                 {
