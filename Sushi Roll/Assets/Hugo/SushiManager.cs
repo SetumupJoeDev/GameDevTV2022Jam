@@ -17,6 +17,8 @@ public class SushiManager : MonoBehaviour
     [SerializeField]
     private List<UTicketUI> _UITickets = new List<UTicketUI>();
 
+    private List<EIngredient> _sushiIngredients = new List<EIngredient>();
+
     [Header("Ticket animations")]
     [SerializeField]
     private List<RectTransform> _ticketPoints = new List<RectTransform>();
@@ -112,7 +114,6 @@ public class SushiManager : MonoBehaviour
                 if(_fallTimeCount >= _fallTime)
                 {
                     Success();
-                    //CreateFinishedSushi();
                     Progress();
                 }
                 break;
@@ -195,9 +196,9 @@ public class SushiManager : MonoBehaviour
             List<Material> sushiMaterial = new List<Material>
             {
                 // hacky way to assign materials
-                _materialMap[_ticketsList[0].IngredientList[0]],
-                _materialMap[_ticketsList[0].IngredientList[1]],
-                _materialMap[_ticketsList[0].IngredientList[2]]
+                _materialMap[_sushiIngredients[0]],
+                _materialMap[_sushiIngredients[1]],
+                _materialMap[_sushiIngredients[2]]
             };
 
             Sushi.FillSushi(sushiMaterial);
@@ -226,8 +227,11 @@ public class SushiManager : MonoBehaviour
 
     private void AdvanceTickets()
     {
+
+        _sushiIngredients = _ticketsList[0].IngredientList;
+
         // Circular list shite
-        if(_ticketsList.Count != 0)
+        if (_ticketsList.Count != 0)
         {
             _ticketsList.RemoveAt(0);
         }
@@ -235,13 +239,13 @@ public class SushiManager : MonoBehaviour
         UpdateToInput();
 
         _backOfList += 1;
-        _frontOfList += _frontOfList + 1;
+        _frontOfList += 1;
 
-        if(_backOfList == _UITickets.Count)
+        if (_backOfList == _UITickets.Count)
         {
             _backOfList = 0;
         }
-        if(_frontOfList == _UITickets.Count)
+        if (_frontOfList == _UITickets.Count)
         {
             _frontOfList = 0;
         }
@@ -291,6 +295,7 @@ public class SushiManager : MonoBehaviour
                         MovingT = 0f;
 
                         AdvanceTickets();
+                        _UITickets[_backOfList].TicketAnimator.SetTrigger("ResetTicket");
                     }
                 }
                 else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
@@ -388,7 +393,8 @@ public class SushiManager : MonoBehaviour
         _fallTimeCount = 0f;
         _currentState = State.Success;
 
-        _chameleonAnimator.SetTrigger("CurlSushi");
+        _UITickets[_frontOfList].TicketAnimator.SetTrigger("TearTicket");
+
         _hackySushiTimer = 0f;
         _hackyWaitingForSushi = true;
     }
@@ -398,7 +404,7 @@ public class SushiManager : MonoBehaviour
         _fallTimeCount = 0f;
         _currentState = State.Failure;
 
-        _chameleonAnimator.SetTrigger("CurlSushi");
+        _UITickets[_frontOfList].TicketAnimator.SetTrigger("TearTicket");
 
         _hackySushiTimer = 0f;
         _hackyWaitingForSushi = true;
@@ -416,12 +422,16 @@ public class SushiManager : MonoBehaviour
     {
         // consume sushi
         FailEvent.Invoke();
+        _chameleonAnimator.SetTrigger("CurlSushi");
+
         Debug.LogError("Failed");
     }
 
     private void Progress()
     {
         UpdateTicketIndex();
+        _chameleonAnimator.SetTrigger("CurlSushi");
+
         _currentState = State.AnimatingMovement;
     }
 }
