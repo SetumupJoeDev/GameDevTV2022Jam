@@ -10,6 +10,7 @@ public class Data : ScriptableObject
     public List<FIngredientSprites> IngredientSprites = new List<FIngredientSprites>();
     public List<FInputBindings> InputBindings = new List<FInputBindings>();
     public List<FIngredientMaterials> IngredientMaterials = new List<FIngredientMaterials>();
+    public List<Sprite> InputQuantities = new List<Sprite>();
 
     [Header("Quantities")]
     public int NumberOfVisibleTickets = 4;

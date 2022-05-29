@@ -6,16 +6,17 @@ using UnityEngine.Events;
 public class SushiManager : MonoBehaviour
 {
     [Header("Read-only")]
-    [SerializeField]
     private List<FTicket> _ticketsList = new List<FTicket>();
-    [SerializeField]
     private List<EIngredient> _toInput = new List<EIngredient>();
-    [SerializeField]
     private List<EIngredient> _toUse = new List<EIngredient>();
+
+    private List<EIngredient> _hasInput = new List<EIngredient>();
 
     [Header("Tickets")]
     [SerializeField]
     private List<UTicketUI> _UITickets = new List<UTicketUI>();
+
+    private List<EIngredient> _sushiIngredients = new List<EIngredient>();
 
     [Header("Ticket animations")]
     [SerializeField]
@@ -34,6 +35,20 @@ public class SushiManager : MonoBehaviour
     [Header("Sushi")]
     [SerializeField]
     private SushiRoll Sushi;
+    [SerializeField]
+    private List<IngredientDispenser> _dispensers = new List<IngredientDispenser>();
+    [SerializeField]
+    private float _fallTime = 0.5f;
+    private float _fallTimeCount = 0f;
+
+    [Header("Chameleon")]
+    [SerializeField]
+    private Animator _chameleonAnimator;
+
+    [SerializeField]
+    private float _hackySushiTimeToAppear = 0.75f;
+    private float _hackySushiTimer = 0f;
+    private bool _hackyWaitingForSushi = false;
 
     private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
 
@@ -70,26 +85,45 @@ public class SushiManager : MonoBehaviour
             ticket.Hide();
         }
 
+        _hackyWaitingForSushi = false;
+
+
         //BeginRound();
     }
 
     void Update()
     {
-        switch(_currentState)
+        _hackySushiTimer += Time.deltaTime;
+
+        if (_hackySushiTimer >= _hackySushiTimeToAppear && _hackyWaitingForSushi == true)
+        {
+            CreateFinishedSushi();
+            _hackyWaitingForSushi = false;
+        }
+
+        switch (_currentState)
         {
             case State.ReceivingInput:
                 CheckInputs();
                 break;
 
             case State.Success:
-                Success();
-                _currentState = State.AnimatingMovement;
+                _fallTimeCount += Time.deltaTime;
+                if(_fallTimeCount >= _fallTime)
+                {
+                    Success();
+                    Progress();
+                }
                 break;
 
             case State.Failure:
-                Failure();
-                _currentState = State.AnimatingMovement;
-                break;
+                _fallTimeCount += Time.deltaTime;
+                if (_fallTimeCount >= _fallTime)
+                {
+                    Failure();
+                    Progress();
+                }
+                    break;
 
             case State.AnimatingMovement:
                 if(AnimateTickets())
@@ -154,17 +188,29 @@ public class SushiManager : MonoBehaviour
     public void CreateFinishedSushi()
     {
         if(Sushi != null)
-        { 
-            List<Material> sushiMaterial = new List<Material>
+        {
+            Sushi.gameObject.SetActive(true);
+            List<Material> sushiMaterial = new List<Material>();
+            //{
+            //    _materialMap[_sushiIngredients[0]],
+            //    _materialMap[_sushiIngredients[1]],
+            //    _materialMap[_sushiIngredients[2]]
+            //};
+            int use = 0;
+            for(int i = 0; i < 3; i++)
             {
-                // hacky way to assign materials
-                _materialMap[_ticketsList[0].IngredientList[0]],
-                _materialMap[_ticketsList[0].IngredientList[1]],
-                _materialMap[_ticketsList[0].IngredientList[2]]
-            };
+                sushiMaterial.Add(_materialMap[_hasInput[use]]);
+                use++;
+                if(use == _hasInput.Count)
+                {
+                    use = 0;
+                }
+            }
 
             Sushi.FillSushi(sushiMaterial);
         }
+
+        _hasInput.Clear();
     }
 
     public void AddIngredient(EIngredient ingredient)
@@ -179,10 +225,23 @@ public class SushiManager : MonoBehaviour
         }
     }
 
+    public IEnumerator DisableAllIngredients()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        foreach (IngredientDispenser dispenser in _dispensers)
+        {
+            dispenser.DisableAll();
+        }
+    }
+
     private void AdvanceTickets()
     {
+
+        _sushiIngredients = _ticketsList[0].IngredientList;
+
         // Circular list shite
-        if(_ticketsList.Count != 0)
+        if (_ticketsList.Count != 0)
         {
             _ticketsList.RemoveAt(0);
         }
@@ -190,13 +249,13 @@ public class SushiManager : MonoBehaviour
         UpdateToInput();
 
         _backOfList += 1;
-        _frontOfList += _frontOfList + 1;
+        _frontOfList += 1;
 
-        if(_backOfList == _UITickets.Count)
+        if (_backOfList == _UITickets.Count)
         {
             _backOfList = 0;
         }
-        if(_frontOfList == _UITickets.Count)
+        if (_frontOfList == _UITickets.Count)
         {
             _frontOfList = 0;
         }
@@ -246,6 +305,7 @@ public class SushiManager : MonoBehaviour
                         MovingT = 0f;
 
                         AdvanceTickets();
+                        _UITickets[_backOfList].TicketAnimator.SetTrigger("ResetTicket");
                     }
                 }
                 else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
@@ -297,9 +357,11 @@ public class SushiManager : MonoBehaviour
             {
                 EventManager.m_eventManager.KeyPress( input.Ingredient );
 
+                _hasInput.Add(input.Ingredient);
+
                 if (!_toInput.Remove(input.Ingredient))
                 {
-                    _currentState = State.Failure;
+                    BeginFail();
                 }
             }
         }
@@ -317,7 +379,7 @@ public class SushiManager : MonoBehaviour
         if(_toInput.Count == 0 && _currentState == State.ReceivingInput)
         {
             // Assumes success when all ingredients are successfully input (no more looked for)
-            _currentState = State.Success;
+            BeginSuccess();
         }
     }
 
@@ -338,11 +400,31 @@ public class SushiManager : MonoBehaviour
         MovingT = 0f;
     }
 
+    private void BeginSuccess()
+    {
+        _fallTimeCount = 0f;
+        _currentState = State.Success;
+
+        _UITickets[_frontOfList].TicketAnimator.SetTrigger("TearTicket");
+
+        _hackySushiTimer = 0f;
+        _hackyWaitingForSushi = true;
+    }
+
+    private void BeginFail()
+    {
+        _fallTimeCount = 0f;
+        _currentState = State.Failure;
+
+        _UITickets[_frontOfList].TicketAnimator.SetTrigger("TearTicket");
+
+        _hackySushiTimer = 0f;
+        _hackyWaitingForSushi = true;
+    }
+
     private void Success()
     {
         // drop on plate
-        UpdateTicketIndex();
-        CreateFinishedSushi();
         SuccessEvent.Invoke();
 
         Debug.LogError("Success");
@@ -351,10 +433,18 @@ public class SushiManager : MonoBehaviour
     private void Failure()
     {
         // consume sushi
-        UpdateTicketIndex();
-        CreateFinishedSushi();
         FailEvent.Invoke();
 
         Debug.LogError("Failed");
+    }
+
+    private void Progress()
+    {
+        UpdateTicketIndex();
+        _chameleonAnimator.SetTrigger("CurlSushi");
+
+        StartCoroutine("DisableAllIngredients");
+
+        _currentState = State.AnimatingMovement;
     }
 }
