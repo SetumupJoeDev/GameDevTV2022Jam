@@ -40,6 +40,15 @@ public class SushiManager : MonoBehaviour
     private float _fallTime = 0.5f;
     private float _fallTimeCount = 0f;
 
+    [Header("Chameleon")]
+    [SerializeField]
+    private Animator _chameleonAnimator;
+
+    [SerializeField]
+    private float _hackySushiTimeToAppear = 0.75f;
+    private float _hackySushiTimer = 0f;
+    private bool _hackyWaitingForSushi = false;
+
 
     private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
 
@@ -76,12 +85,23 @@ public class SushiManager : MonoBehaviour
             ticket.Hide();
         }
 
+        _hackyWaitingForSushi = false;
+
+
         //BeginRound();
     }
 
     void Update()
     {
-        switch(_currentState)
+        _hackySushiTimer += Time.deltaTime;
+
+        if (_hackySushiTimer >= _hackySushiTimeToAppear && _hackyWaitingForSushi == true)
+        {
+            CreateFinishedSushi();
+            _hackyWaitingForSushi = false;
+        }
+
+        switch (_currentState)
         {
             case State.ReceivingInput:
                 CheckInputs();
@@ -92,7 +112,7 @@ public class SushiManager : MonoBehaviour
                 if(_fallTimeCount >= _fallTime)
                 {
                     Success();
-                    CreateFinishedSushi();
+                    //CreateFinishedSushi();
                     Progress();
                 }
                 break;
@@ -170,7 +190,8 @@ public class SushiManager : MonoBehaviour
     public void CreateFinishedSushi()
     {
         if(Sushi != null)
-        { 
+        {
+            Sushi.gameObject.SetActive(true);
             List<Material> sushiMaterial = new List<Material>
             {
                 // hacky way to assign materials
@@ -366,12 +387,21 @@ public class SushiManager : MonoBehaviour
     {
         _fallTimeCount = 0f;
         _currentState = State.Success;
+
+        _chameleonAnimator.SetTrigger("CurlSushi");
+        _hackySushiTimer = 0f;
+        _hackyWaitingForSushi = true;
     }
 
     private void BeginFail()
     {
         _fallTimeCount = 0f;
         _currentState = State.Failure;
+
+        _chameleonAnimator.SetTrigger("CurlSushi");
+
+        _hackySushiTimer = 0f;
+        _hackyWaitingForSushi = true;
     }
 
     private void Success()

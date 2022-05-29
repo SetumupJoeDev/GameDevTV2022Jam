@@ -13,4 +13,9 @@ public class SushiRoll : MonoBehaviour
             SushiFillings[i].material = materials[i];
         }
     }
+
+    public void DisableSushi()
+    {
+        gameObject.SetActive(false);
+    }
 }
