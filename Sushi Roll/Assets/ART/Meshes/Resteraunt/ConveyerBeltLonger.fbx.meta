@@ -1,19 +1,17 @@
 fileFormatVersion: 2
-guid: 637dd6180380fa34cb6e1fbce1338c92
+guid: cf17e8f1e7ef9ec428386621f6d6f2bb
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: CurtainMAT
-    second: {fileID: 2100000, guid: 9d07b5199f1265e4fb0a912c84d1413e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: RedWoodMAT
-    second: {fileID: 2100000, guid: 2de4318b0e1b1094f8798ac22a7f6327, type: 2}
+      name: ConveyerBeltMAT
+    second: {fileID: 2100000, guid: 1dfaba90e98800942bd094d70fee6e48, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
