@@ -14,23 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IngredientSprites:
   - Ingredient: 0
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 8a11961b029f71349830b7a96121b4ce, type: 3}
   - Ingredient: 1
-    Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 1447bbfc1d41f6b498e2400998f527d4, type: 3}
   - Ingredient: 2
-    Icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: d13df90657ef1994d88fc3026eb1f7c1, type: 3}
   - Ingredient: 3
-    Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 36665e070923c444bbe385f50f8794ae, type: 3}
   - Ingredient: 4
-    Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 2dffc3d26bd066d4db0776f437220b9f, type: 3}
   - Ingredient: 5
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 1c3550974b7d81b4f8c21ef2988b82ec, type: 3}
   - Ingredient: 6
-    Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 590a37babaea2f14e9374dc4c83a66f0, type: 3}
   - Ingredient: 7
-    Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: c7175929f3e7aac4eaa0bbd7f027c5e4, type: 3}
   - Ingredient: 8
-    Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+    Icon: {fileID: 21300000, guid: 1d78ece9ace112144b9aa83cbe5466e1, type: 3}
   InputBindings:
   - Ingredient: 0
     InputKey: 49
