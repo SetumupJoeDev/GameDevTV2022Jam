@@ -1772,10 +1772,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 352621338}
     - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
-      propertyPath: _dispensers.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 293592322966778586, guid: b084e542659e7da41ab0c52f1e01ebc7, type: 3}
       propertyPath: _UITickets.Array.data[0]
       value: 
       objectReference: {fileID: 411380093}

@@ -52,6 +52,7 @@ public class IngredientDispenser : MonoBehaviour
         foreach (GameObject ingredientMesh in m_ingredientPool)
         {
             ingredientMesh.SetActive(false);
+            ingredientMesh.transform.GetChild(0).position = ingredientMesh.transform.position;
         }
     }
 
