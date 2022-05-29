@@ -69,6 +69,10 @@ MonoBehaviour:
     IngredientMaterial: {fileID: 2100000, guid: fff5f98991c9e374e9e81cb7eee84498, type: 2}
   - Ingredient: 8
     IngredientMaterial: {fileID: 2100000, guid: b95b989dc88428f4181caecde95c68f3, type: 2}
+  InputQuantities:
+  - {fileID: 21300000, guid: ee5ae677b57f0e64bb8ed8cd74a3c53c, type: 3}
+  - {fileID: 21300000, guid: 718703c4ab66e6246a930293c0695fb9, type: 3}
+  - {fileID: 21300000, guid: 5f67069ec5e320347bd520403c3d194a, type: 3}
   NumberOfVisibleTickets: 4
   NumberOfIngredients: 3
   NumberOfPossibleIngredients: 9

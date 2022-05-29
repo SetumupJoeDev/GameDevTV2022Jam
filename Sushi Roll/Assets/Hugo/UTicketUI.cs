@@ -14,6 +14,9 @@ public class UTicketUI : MonoBehaviour
     [SerializeField]
     private CanvasGroup TicketCG;
 
+    public Animator TicketAnimator;
+
+
     [HideInInspector]
     public int IndexInList = 0;
 
@@ -74,7 +77,7 @@ public class UTicketUI : MonoBehaviour
                 text += " | " + ((int)type[i] + 1);
             }
 
-            IngredientUIList[i].PopulateIngredientInfo(text, _TextureMap[type[i]]);
+            IngredientUIList[i].PopulateIngredientInfo(GameData.InputQuantities[quantities[i] - 1], _TextureMap[type[i]]);
         }
 
         _ticket = Ticket;

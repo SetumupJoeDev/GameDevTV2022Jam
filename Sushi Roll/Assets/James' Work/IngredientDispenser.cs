@@ -14,6 +14,9 @@ public class IngredientDispenser : MonoBehaviour
     [Tooltip("The type of ingredient this dispenser should dispense.")]
     public EIngredient m_ingredientType;
 
+    [SerializeField]
+    private Animator _handleAnimator;
+
     private void Start()
     {
         //Subscribes the DispenseIngredient method to the onKeyPress event so that when the correct key is pressed, this dispenser will activate
@@ -22,7 +25,6 @@ public class IngredientDispenser : MonoBehaviour
 
     public void DispenseIngredient(EIngredient ingredientName)
     {
-
         //Checks to see if the ingredient type passed in is the same as the type this dispenser dispenses
         if (ingredientName == m_ingredientType)
         {
@@ -37,6 +39,8 @@ public class IngredientDispenser : MonoBehaviour
                     ingredient.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
 
                     ingredient.SetActive(true);
+
+                    _handleAnimator.SetTrigger("Pull");
 
                     //Returns out of the method to avoid spawning multiple ingredients
                     return;

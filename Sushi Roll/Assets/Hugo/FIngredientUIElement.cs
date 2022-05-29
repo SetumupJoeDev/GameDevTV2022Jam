@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class FIngredientUIElement : MonoBehaviour
 {
-    public TMPro.TMP_Text _IngredientNameText;
+    public Image _IngredientNameText;
     public Image _IngredientIconImage;
     public CanvasGroup _CanvasGroup;
 
-    public void PopulateIngredientInfo(string text, Sprite icon)
+    public void PopulateIngredientInfo(Sprite text, Sprite icon)
     {
-        _IngredientNameText.text = text;
+        _IngredientNameText.sprite = text;
         _IngredientIconImage.sprite = icon;
         _CanvasGroup.alpha = 1f;
     }
