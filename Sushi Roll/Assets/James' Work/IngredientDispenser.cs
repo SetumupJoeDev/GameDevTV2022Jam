@@ -34,7 +34,7 @@ public class IngredientDispenser : MonoBehaviour
                 {
                     ingredient.transform.position = m_dispensePoint.position;
 
-                    ingredient.GetComponent<Rigidbody>( ).velocity = Vector3.zero;
+                    ingredient.GetComponentInChildren<Rigidbody>( ).velocity = Vector3.zero;
 
                     ingredient.SetActive( true );
 

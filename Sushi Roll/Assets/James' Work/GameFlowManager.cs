@@ -29,47 +29,11 @@ public class GameFlowManager : MonoBehaviour
 
     public CanvasGroup m_mainMenuCanvas;
 
-    [Space]
-
-    #endregion
-
-    #region Options Menu
-    [Header("Options Menu")]
-
-    public CanvasGroup m_optionsMenuCanvas;
-
-    [Space]
-
-    #endregion
-
-    #region Level Select
-    [Header("Level Select Menu")]
-
-    public CanvasGroup m_levelSelectCanvas;
-
-    [Space]
-
-    #endregion
-
-    #region Pause Menu
-
-    [Header("Pause Menu")]
-
-    public CanvasGroup m_pauseMenuCanvas;
-
     #endregion
 
     private void Start( )
     {
 
-        CanvasGroup[] menuCanvases = new CanvasGroup[]{m_optionsMenuCanvas, m_levelSelectCanvas, m_pauseMenuCanvas};
-
-        foreach(CanvasGroup canvas in menuCanvases )
-        {
-            m_uiManager.ToggleCanvasGroup( false , canvas );
-        }
-
-        m_uiManager.ToggleCanvasGroup( true , m_mainMenuCanvas );
 
     }
 
