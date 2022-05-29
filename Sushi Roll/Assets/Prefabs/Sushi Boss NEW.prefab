@@ -65,3 +65,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Sushi: {fileID: 0}
+  _dispensers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _fallTime: 0.5

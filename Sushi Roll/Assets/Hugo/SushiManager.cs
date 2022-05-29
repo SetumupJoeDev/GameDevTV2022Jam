@@ -34,6 +34,12 @@ public class SushiManager : MonoBehaviour
     [Header("Sushi")]
     [SerializeField]
     private SushiRoll Sushi;
+    [SerializeField]
+    private List<IngredientDispenser> _dispensers = new List<IngredientDispenser>();
+    [SerializeField]
+    private float _fallTime = 0.5f;
+    private float _fallTimeCount = 0f;
+
 
     private Dictionary<EIngredient, Material> _materialMap = new Dictionary<EIngredient, Material>();
 
@@ -82,18 +88,28 @@ public class SushiManager : MonoBehaviour
                 break;
 
             case State.Success:
-                Success();
-                _currentState = State.AnimatingMovement;
+                _fallTimeCount += Time.deltaTime;
+                if(_fallTimeCount >= _fallTime)
+                {
+                    Success();
+                    CreateFinishedSushi();
+                    Progress();
+                }
                 break;
 
             case State.Failure:
-                Failure();
-                _currentState = State.AnimatingMovement;
-                break;
+                _fallTimeCount += Time.deltaTime;
+                if (_fallTimeCount >= _fallTime)
+                {
+                    Failure();
+                    Progress();
+                }
+                    break;
 
             case State.AnimatingMovement:
                 if(AnimateTickets())
                 {
+                    DisableAllIngredients();
                     _currentState = State.ReceivingInput;
                 }
                 break;
@@ -176,6 +192,14 @@ public class SushiManager : MonoBehaviour
             {
                 _currentState = State.Failure;
             }
+        }
+    }
+
+    public void DisableAllIngredients()
+    {
+        foreach (IngredientDispenser dispenser in _dispensers)
+        {
+            dispenser.DisableAll();
         }
     }
 
@@ -299,7 +323,7 @@ public class SushiManager : MonoBehaviour
 
                 if (!_toInput.Remove(input.Ingredient))
                 {
-                    _currentState = State.Failure;
+                    BeginFail();
                 }
             }
         }
@@ -317,7 +341,7 @@ public class SushiManager : MonoBehaviour
         if(_toInput.Count == 0 && _currentState == State.ReceivingInput)
         {
             // Assumes success when all ingredients are successfully input (no more looked for)
-            _currentState = State.Success;
+            BeginSuccess();
         }
     }
 
@@ -338,11 +362,21 @@ public class SushiManager : MonoBehaviour
         MovingT = 0f;
     }
 
+    private void BeginSuccess()
+    {
+        _fallTimeCount = 0f;
+        _currentState = State.Success;
+    }
+
+    private void BeginFail()
+    {
+        _fallTimeCount = 0f;
+        _currentState = State.Failure;
+    }
+
     private void Success()
     {
         // drop on plate
-        UpdateTicketIndex();
-        CreateFinishedSushi();
         SuccessEvent.Invoke();
 
         Debug.LogError("Success");
@@ -351,10 +385,13 @@ public class SushiManager : MonoBehaviour
     private void Failure()
     {
         // consume sushi
-        UpdateTicketIndex();
-        CreateFinishedSushi();
         FailEvent.Invoke();
-
         Debug.LogError("Failed");
+    }
+
+    private void Progress()
+    {
+        UpdateTicketIndex();
+        _currentState = State.AnimatingMovement;
     }
 }
