@@ -84,6 +84,7 @@ public class UIManager : MonoBehaviour
     {
         m_mainMenuCanvas.alpha = 1;
         m_mainMenuCanvas.interactable = true;
+        m_mainMenuCanvas.blocksRaycasts = true;
 
         m_optionsMenu.ResetTrigger( "EnterMenu" );
         m_mainMenu.SetTrigger( "EnterMenu" );
@@ -93,6 +94,7 @@ public class UIManager : MonoBehaviour
     {
         m_optionsMenuCanvas.alpha = 1;
         m_optionsMenuCanvas.interactable = true;
+        m_optionsMenuCanvas.blocksRaycasts = true;
 
         m_mainMenu.ResetTrigger( "ExitMenu" );
         m_optionsMenu.SetTrigger( "EnterMenu" );
@@ -107,6 +109,7 @@ public class UIManager : MonoBehaviour
     {
         m_levelSelectCanvas.alpha = 1;
         m_levelSelectCanvas.interactable = true;
+        m_levelSelectCanvas.blocksRaycasts = true;
 
         m_levelSelect.SetTrigger( "EnterMenu" );
     }
@@ -124,18 +127,21 @@ public class UIManager : MonoBehaviour
                 {
                     m_mainMenuCanvas.alpha = 0;
                     m_mainMenuCanvas.interactable = false;
+                    m_mainMenuCanvas.blocksRaycasts = false;
                     break;
                 }
             case ( "OptionsMenu" ):
                 {
                     m_optionsMenuCanvas.alpha = 0;
-                    m_mainMenuCanvas.interactable = false;
+                    m_optionsMenuCanvas.interactable = false;
+                    m_optionsMenuCanvas.blocksRaycasts = false;
                     break;
                 }
             case ( "LevelSelect" ):
                 {
                     m_levelSelectCanvas.alpha = 0;
                     m_levelSelectCanvas.interactable = false;
+                    m_levelSelectCanvas.blocksRaycasts = false;
                     break;
                 }
         }

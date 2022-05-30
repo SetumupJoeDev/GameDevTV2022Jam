@@ -14,10 +14,16 @@ public class GameFlowManager : MonoBehaviour
 
     public EIngredient[] m_currentActiveIngredients;
 
+    public SushiManager m_sushiManager;
+
     [Tooltip("An array that contains all of the different level data.")]
     public LevelData[] m_levelData;
 
+    public LevelData m_currentLevel;
+
     public GameTimer m_gameTimer;
+
+    public CanvasGroup m_timerCanvas;
 
     public UIManager m_uiManager;
 
@@ -29,26 +35,32 @@ public class GameFlowManager : MonoBehaviour
 
     public CanvasGroup m_mainMenuCanvas;
 
+    public bool m_hasNavigated = false;
+
     #endregion
 
-    public bool m_hasNavigated = false;
+    [Header("Music")]
+
+    public AudioSource m_gameMusicSource;
+
+    public AudioClip m_menuMusic;
+
+    public AudioClip m_gameMusic;
+
+
 
     private void Start( )
     {
 
-        EventManager.m_eventManager.onMenuAnimationComplete += EnterNewMenu;
+        EventManager.m_eventManager.onMenuAnimationComplete += EnterNewState;
 
         m_currentGameState = GameState.inMainMenu;
 
     }
 
-    public void LoadLevel(LevelData levelToLoad )
+    public void LoadLevel( int levelIndex )
     {
-        //Sets the time remaining on the timer to the time limit of the level data passed in
-        m_gameTimer.m_timeRemaining = levelToLoad.m_timeLimit;
-
-        //Sets the available ingredients to that of the level data passed in
-        m_currentActiveIngredients = levelToLoad.m_availableIngredients;
+        m_currentLevel = m_levelData[levelIndex];
 
     }
 
@@ -134,10 +146,21 @@ public class GameFlowManager : MonoBehaviour
     {
         m_uiManager.ExitMainMenu( );
 
+        m_currentGameState = GameState.inLevelSelection;
+
         m_hasNavigated = true;
     }
 
-    private void EnterNewMenu( string id )
+    public void PlayGame( )
+    {
+
+        m_uiManager.ExitMainMenu( );
+
+        m_currentGameState = GameState.inGame;
+
+    }
+
+    private void EnterNewState( string id )
     {
         if ( m_hasNavigated )
         {
@@ -147,6 +170,7 @@ public class GameFlowManager : MonoBehaviour
                 case ( GameState.inMainMenu ):
                     {
                         m_uiManager.EnterMainMenu( );
+
                         break;
                     }
                 case ( GameState.inOptions ):
@@ -159,7 +183,19 @@ public class GameFlowManager : MonoBehaviour
                         m_uiManager.EnterLevelSelect( );
                         break;
                     }
+                case ( GameState.inGame ):
+                    {
+                        m_gameMusicSource.clip = m_gameMusic;
+
+                        m_gameMusicSource.Play( );
+
+                        m_uiManager.ToggleCanvasGroup( true , m_timerCanvas );
+
+                        m_sushiManager.BeginRound( m_currentLevel.m_availableIngredients );
+                        break;
+                    }
             }
+            
         }
     }
 
