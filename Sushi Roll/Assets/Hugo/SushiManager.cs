@@ -70,6 +70,8 @@ public class SushiManager : MonoBehaviour
 
     public AudioClip m_recipeFailed;
 
+    public bool m_failedSushi;
+
     private enum State : int
     {
         ReceivingInput,
@@ -218,6 +220,8 @@ public class SushiManager : MonoBehaviour
             }
 
             Sushi.FillSushi(sushiMaterial);
+
+            Sushi.m_success = !m_failedSushi;
         }
 
         _hasInput.Clear();
@@ -423,6 +427,8 @@ public class SushiManager : MonoBehaviour
 
         _hackySushiTimer = 0f;
         _hackyWaitingForSushi = true;
+
+        m_failedSushi = false;
     }
 
     private void BeginFail()
@@ -434,6 +440,8 @@ public class SushiManager : MonoBehaviour
 
         _hackySushiTimer = 0f;
         _hackyWaitingForSushi = true;
+
+        m_failedSushi = true;
     }
 
     private void Success()

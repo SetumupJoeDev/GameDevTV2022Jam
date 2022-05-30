@@ -23,6 +23,10 @@ public class EventManager : MonoBehaviour
 
     public event Action<AudioClip> onSFXPlay;
 
+    public event Action onSuccessfulSushi;
+
+    public event Action onUnsuccessfulSushi;
+
     public void KeyPress( EIngredient id )
     {
         if( onKeyPress != null )
@@ -60,6 +64,22 @@ public class EventManager : MonoBehaviour
         if( onSFXPlay != null )
         {
             onSFXPlay( clipToPlay );
+        }
+    }
+
+    public void SuccessfulSushi( )
+    {
+        if( onSuccessfulSushi != null )
+        {
+            onSuccessfulSushi( );
+        }
+    }
+
+    public void UnsuccessfulSushi( )
+    {
+        if ( onUnsuccessfulSushi != null )
+        {
+            onUnsuccessfulSushi( );
         }
     }
 
