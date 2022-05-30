@@ -30,6 +30,8 @@ public class GameFlowManager : MonoBehaviour
 
     public UIManager m_uiManager;
 
+    public GameObject m_hampterPanel;
+
     private bool m_loadingComplete = false;
 
     public RankingSystem m_rankingSystem;
@@ -47,6 +49,8 @@ public class GameFlowManager : MonoBehaviour
     public CanvasGroup m_mainMenuCanvas;
 
     public bool m_hasNavigated = false;
+
+    public bool m_gameStarted = false;
 
     #endregion
 
@@ -226,26 +230,31 @@ public class GameFlowManager : MonoBehaviour
                     }
                 case ( GameState.inGame ):
                     {
-                        m_gameMusicSource.clip = m_gameMusic;
-
-                        m_gameMusicSource.Play( );
-
-                        m_uiManager.ToggleCanvasGroup( true , m_timerCanvas );
-
-                        m_rankingSystem.m_timeLimit = m_currentLevel.m_timeLimit;
-
-                        m_gameTimer.m_timeRemaining = m_currentLevel.m_timeLimit;
-
-                        List<EIngredient> availableIngredients = new List<EIngredient>();
-
-                        foreach(EIngredient ingredient in m_currentLevel.m_availableIngredients )
+                        if ( !m_gameStarted )
                         {
-                            availableIngredients.Add( ingredient );
+                            m_gameMusicSource.clip = m_gameMusic;
+
+                            m_gameMusicSource.Play( );
+
+                            m_uiManager.ToggleCanvasGroup( true , m_timerCanvas );
+
+                            m_rankingSystem.m_timeLimit = m_currentLevel.m_timeLimit;
+
+                            m_gameTimer.m_timeRemaining = m_currentLevel.m_timeLimit;
+
+                            List<EIngredient> availableIngredients = new List<EIngredient>();
+
+                            foreach ( EIngredient ingredient in m_currentLevel.m_availableIngredients )
+                            {
+                                availableIngredients.Add( ingredient );
+                            }
+
+                            m_sushiManager.BeginRound( availableIngredients );
+
+                            m_loadingComplete = true;
+
+                            m_gameStarted = true;
                         }
-
-                        m_sushiManager.BeginRound( availableIngredients );
-
-                        m_loadingComplete = true;
                         break;
                     }
                 case ( GameState.inLevelRating ):
@@ -287,6 +296,13 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
+    public void ExitGame( )
+    {
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
+
+        ExitGame( );
+    }
+
     public void StartNextLevel( )
     {
         m_currentGameState = GameState.inGame;
@@ -309,6 +325,11 @@ public class GameFlowManager : MonoBehaviour
         }
 
         m_sushiManager.BeginRound( availableIngredients );
+    }
+
+    public void PlayHampter( )
+    {
+        m_hampterPanel.SetActive( !m_hampterPanel.activeSelf );
     }
 
 }
