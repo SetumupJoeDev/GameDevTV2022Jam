@@ -8,7 +8,7 @@ public class RankingSystem : MonoBehaviour
     private int m_successfulRecipes;
 
     //The current level's initial time limit
-    private float m_timeLimit;
+    public float m_timeLimit;
 
     [Tooltip("The number of stars awarded to the player for the current level.")]
     public int m_numStarsAwarded;
@@ -49,6 +49,8 @@ public class RankingSystem : MonoBehaviour
             //3 star rank
             m_numStarsAwarded = 1;
         }
+
+        Debug.Log( "You got " + m_numStarsAwarded + " stars!" );
 
     }
 

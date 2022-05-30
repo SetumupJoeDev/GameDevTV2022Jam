@@ -427,6 +427,8 @@ public class SushiManager : MonoBehaviour
         // drop on plate
         SuccessEvent.Invoke();
 
+        EventManager.m_eventManager.RecipeSuccess( );
+
         Debug.LogError("Success");
     }
 

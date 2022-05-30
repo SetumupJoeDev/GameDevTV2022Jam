@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level01
   m_EditorClassIdentifier: 
   m_timeLimit: 30
-  m_availableIngredients: 000000000400000002000000
+  m_availableIngredients: 000000000100000002000000

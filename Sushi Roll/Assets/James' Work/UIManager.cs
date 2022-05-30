@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI m_timerText;
 
     [Tooltip("The text used to inform the player that their time us up.")]
-    public TextMeshProUGUI m_timeUpText;
+    public GameObject m_timeUpText;
 
     #region Menu Animators
 
@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     public void TriggerTimeUpText( )
     {
         //Activates the TimeUp text
-        m_timeUpText.gameObject.SetActive( true );
+        m_timeUpText.SetActive( true );
 
     }
 

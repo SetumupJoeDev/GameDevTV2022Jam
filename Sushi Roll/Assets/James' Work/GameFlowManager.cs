@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameFlowManager : MonoBehaviour
@@ -27,6 +28,10 @@ public class GameFlowManager : MonoBehaviour
 
     public UIManager m_uiManager;
 
+    private bool m_loadingComplete = false;
+
+    public RankingSystem m_rankingSystem;
+
     #endregion
 
     #region Main Menu
@@ -38,6 +43,8 @@ public class GameFlowManager : MonoBehaviour
     public bool m_hasNavigated = false;
 
     #endregion
+
+    public Slider m_musicVolumeSlider;
 
     [Header("Music")]
 
@@ -54,7 +61,11 @@ public class GameFlowManager : MonoBehaviour
 
         EventManager.m_eventManager.onMenuAnimationComplete += EnterNewState;
 
+        EventManager.m_eventManager.onTimeUp += TimeUp;
+
         m_currentGameState = GameState.inMainMenu;
+
+        m_currentLevel = m_levelData[0];
 
     }
 
@@ -86,8 +97,10 @@ public class GameFlowManager : MonoBehaviour
                 }
             case GameState.inGame:
                 {
-
-                    m_gameTimer.RunTimer( );
+                    if ( m_loadingComplete )
+                    {
+                        m_gameTimer.RunTimer( );
+                    }
 
                     break;
                 }
@@ -158,6 +171,8 @@ public class GameFlowManager : MonoBehaviour
 
         m_currentGameState = GameState.inGame;
 
+        m_hasNavigated = true;
+
     }
 
     private void EnterNewState( string id )
@@ -191,12 +206,33 @@ public class GameFlowManager : MonoBehaviour
 
                         m_uiManager.ToggleCanvasGroup( true , m_timerCanvas );
 
-                        m_sushiManager.BeginRound( m_currentLevel.m_availableIngredients );
+                        m_rankingSystem.m_timeLimit = m_currentLevel.m_timeLimit;
+
+                        List<EIngredient> availableIngredients = new List<EIngredient>();
+
+                        foreach(EIngredient ingredient in m_currentLevel.m_availableIngredients )
+                        {
+                            availableIngredients.Add( ingredient );
+                        }
+
+                        m_sushiManager.BeginRound( availableIngredients );
+
+                        m_loadingComplete = true;
                         break;
                     }
             }
             
         }
+    }
+
+    public void UpdateMusicVolume( )
+    {
+        m_gameMusicSource.volume = m_musicVolumeSlider.value;
+    }
+
+    public void TimeUp( )
+    {
+        m_rankingSystem.CalculateRanking( );
     }
 
 }
