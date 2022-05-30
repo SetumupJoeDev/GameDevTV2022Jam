@@ -237,6 +237,8 @@ MonoBehaviour:
   - {fileID: 3918896762083462329}
   m_ingredientType: 0
   _handleAnimator: {fileID: 326075757076566047}
+  m_dispenserLeverSFX: {fileID: 8300000, guid: 89a008cad45f4e448bfb2bdab2999f59, type: 3}
+  m_ingredientDispensed: {fileID: 8300000, guid: 1da02b25bb733734b88c85876b304443, type: 3}
 --- !u!1 &4948943359688462659
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,6 +60,16 @@ public class SushiManager : MonoBehaviour
     private float T = 0f;
     private float MovingT = 0f;
 
+    public AudioClip m_newTicketSFX;
+
+    public AudioClip m_ticketTearSFX;
+
+    public AudioClip m_chameleonCurlTongue;
+
+    public AudioClip m_sushiRollComplete;
+
+    public AudioClip m_recipeFailed;
+
     private enum State : int
     {
         ReceivingInput,
@@ -346,7 +356,10 @@ public class SushiManager : MonoBehaviour
         }
 
         _ticketsList.Add(NewTicket);
+        EventManager.m_eventManager.SFXPlay( m_newTicketSFX );
+
         return _ticketsList[_ticketsList.Count - 1];
+
     }
 
     private void CheckInputs()
@@ -405,6 +418,7 @@ public class SushiManager : MonoBehaviour
         _fallTimeCount = 0f;
         _currentState = State.Success;
 
+        EventManager.m_eventManager.SFXPlay( m_ticketTearSFX );
         _UITickets[_frontOfList].TicketAnimator.SetTrigger("TearTicket");
 
         _hackySushiTimer = 0f;
@@ -427,6 +441,8 @@ public class SushiManager : MonoBehaviour
         // drop on plate
         SuccessEvent.Invoke();
 
+        EventManager.m_eventManager.SFXPlay( m_sushiRollComplete );
+
         EventManager.m_eventManager.RecipeSuccess( );
 
         Debug.LogError("Success");
@@ -437,6 +453,8 @@ public class SushiManager : MonoBehaviour
         // consume sushi
         FailEvent.Invoke();
 
+        EventManager.m_eventManager.SFXPlay( m_recipeFailed );
+
         Debug.LogError("Failed");
     }
 
@@ -444,6 +462,7 @@ public class SushiManager : MonoBehaviour
     {
         UpdateTicketIndex();
         _chameleonAnimator.SetTrigger("CurlSushi");
+        EventManager.m_eventManager.SFXPlay( m_chameleonCurlTongue );
 
         StartCoroutine("DisableAllIngredients");
 

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65cf393c6e2f7245b3342a77be245cf, type: 3}
   m_Name: Level01
   m_EditorClassIdentifier: 
-  m_timeLimit: 30
+  m_timeLimit: 60
   m_availableIngredients: 000000000100000002000000

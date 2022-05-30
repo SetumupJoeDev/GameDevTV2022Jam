@@ -22,6 +22,8 @@ public class GameFlowManager : MonoBehaviour
 
     public LevelData m_currentLevel;
 
+    public int m_currentLevelIndex;
+
     public GameTimer m_gameTimer;
 
     public CanvasGroup m_timerCanvas;
@@ -31,6 +33,10 @@ public class GameFlowManager : MonoBehaviour
     private bool m_loadingComplete = false;
 
     public RankingSystem m_rankingSystem;
+
+    public GameObject m_levelRating;
+
+    private int m_levelStarCount;
 
     #endregion
 
@@ -46,13 +52,21 @@ public class GameFlowManager : MonoBehaviour
 
     public Slider m_musicVolumeSlider;
 
-    [Header("Music")]
+    public Slider m_sfxVolumeSlider;
+
+    [Header("Music & Sound")]
 
     public AudioSource m_gameMusicSource;
+
+    public SFXManager m_sxfManager;
 
     public AudioClip m_menuMusic;
 
     public AudioClip m_gameMusic;
+
+    public AudioClip m_buttonPress;
+
+
 
 
 
@@ -72,6 +86,10 @@ public class GameFlowManager : MonoBehaviour
     public void LoadLevel( int levelIndex )
     {
         m_currentLevel = m_levelData[levelIndex];
+
+        m_currentLevelIndex = levelIndex;
+
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
 
     }
 
@@ -141,6 +159,8 @@ public class GameFlowManager : MonoBehaviour
         }
 
         m_currentGameState = GameState.inMainMenu;
+        
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
 
     }
 
@@ -150,6 +170,8 @@ public class GameFlowManager : MonoBehaviour
         m_uiManager.ExitMainMenu( );
 
         m_currentGameState = GameState.inOptions;
+
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
 
         m_hasNavigated = true;
 
@@ -161,6 +183,8 @@ public class GameFlowManager : MonoBehaviour
 
         m_currentGameState = GameState.inLevelSelection;
 
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
+
         m_hasNavigated = true;
     }
 
@@ -170,6 +194,8 @@ public class GameFlowManager : MonoBehaviour
         m_uiManager.ExitMainMenu( );
 
         m_currentGameState = GameState.inGame;
+        
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
 
         m_hasNavigated = true;
 
@@ -208,6 +234,8 @@ public class GameFlowManager : MonoBehaviour
 
                         m_rankingSystem.m_timeLimit = m_currentLevel.m_timeLimit;
 
+                        m_gameTimer.m_timeRemaining = m_currentLevel.m_timeLimit;
+
                         List<EIngredient> availableIngredients = new List<EIngredient>();
 
                         foreach(EIngredient ingredient in m_currentLevel.m_availableIngredients )
@@ -220,6 +248,12 @@ public class GameFlowManager : MonoBehaviour
                         m_loadingComplete = true;
                         break;
                     }
+                case ( GameState.inLevelRating ):
+                    {
+                        m_levelRating.SetActive( true );
+                        m_levelRating.GetComponent<Animator>( ).SetInteger( "StarCount", m_levelStarCount );
+                        break;
+                    }
             }
             
         }
@@ -230,9 +264,51 @@ public class GameFlowManager : MonoBehaviour
         m_gameMusicSource.volume = m_musicVolumeSlider.value;
     }
 
+    public void UpdateSFXVolume( )
+    {
+        m_sxfManager.m_sfxVolume = m_sfxVolumeSlider.value;
+    }
+
     public void TimeUp( )
     {
-        m_rankingSystem.CalculateRanking( );
+        m_levelStarCount = m_rankingSystem.CalculateRanking( );
+
+        m_sushiManager.EndRound( );
+
+        m_gameMusicSource.Stop( );
+
+        m_currentGameState = GameState.inLevelRating;
+
+        m_currentLevelIndex++;
+
+        if ( m_currentLevelIndex < m_levelData.Length )
+        {
+            m_currentLevel = m_levelData[m_currentLevelIndex];
+        }
+    }
+
+    public void StartNextLevel( )
+    {
+        m_currentGameState = GameState.inGame;
+
+        EventManager.m_eventManager.SFXPlay( m_buttonPress );
+
+        m_gameMusicSource.Play( );
+
+        m_rankingSystem.m_timeLimit = m_currentLevel.m_timeLimit;
+
+        m_uiManager.HideTimeUpText( );
+        
+        m_gameTimer.m_timeRemaining = m_currentLevel.m_timeLimit;
+
+        List<EIngredient> availableIngredients = new List<EIngredient>();
+
+        foreach ( EIngredient ingredient in m_currentLevel.m_availableIngredients )
+        {
+            availableIngredients.Add( ingredient );
+        }
+
+        m_sushiManager.BeginRound( availableIngredients );
     }
 
 }

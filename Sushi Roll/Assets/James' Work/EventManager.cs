@@ -21,6 +21,8 @@ public class EventManager : MonoBehaviour
 
     public event Action<string> onMenuAnimationComplete;
 
+    public event Action<AudioClip> onSFXPlay;
+
     public void KeyPress( EIngredient id )
     {
         if( onKeyPress != null )
@@ -50,6 +52,14 @@ public class EventManager : MonoBehaviour
         if( onMenuAnimationComplete != null )
         {
             onMenuAnimationComplete( id );
+        }
+    }
+
+    public void SFXPlay(AudioClip clipToPlay )
+    {
+        if( onSFXPlay != null )
+        {
+            onSFXPlay( clipToPlay );
         }
     }
 
