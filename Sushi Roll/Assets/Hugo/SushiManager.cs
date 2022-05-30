@@ -40,6 +40,7 @@ public class SushiManager : MonoBehaviour
     [SerializeField]
     private float _fallTime = 0.5f;
     private float _fallTimeCount = 0f;
+    private float _initialAnimT = 0f;
 
     [Header("Chameleon")]
     [SerializeField]
@@ -79,6 +80,7 @@ public class SushiManager : MonoBehaviour
         Failure,
         AnimatingMovement,
         Idle,
+        IntroAnimation
     }
 
     private State _currentState = State.ReceivingInput;
@@ -115,6 +117,10 @@ public class SushiManager : MonoBehaviour
 
         switch (_currentState)
         {
+            case State.IntroAnimation:
+                IntroAnimateTickets();
+                break;
+
             case State.ReceivingInput:
                 CheckInputs();
                 break;
@@ -146,10 +152,10 @@ public class SushiManager : MonoBehaviour
 
             case State.Idle:
 
-                if (Input.GetKeyDown(KeyCode.B))
-                {
-                    BeginRound(GameData.ActiveIngredients);
-                }
+                //if (Input.GetKeyDown(KeyCode.B))
+                //{
+                //    BeginRound(GameData.ActiveIngredients);
+                //}
 
                 break;
         }    
@@ -164,18 +170,19 @@ public class SushiManager : MonoBehaviour
         _ticketsList.Clear();
 
         _backOfList = _UITickets.Count - 1;
-        for(int i = 0; i < GameData.NumberOfVisibleTickets; i++)
+        _frontOfList = 0;
+        for(int i = 0; i < _UITickets.Count; i++)
         {
             _UITickets[i].Initialise(i);
             _UITickets[i].AssignTicket(GenerateTicket());
 
             // snap tickets to correct pos
-            _UITickets[i].gameObject.GetComponent<RectTransform>().anchoredPosition = _ticketPoints[i].anchoredPosition;
+            _UITickets[i].gameObject.GetComponent<RectTransform>().anchoredPosition = _ticketPoints[i].anchoredPosition + new Vector2(900f, 0f);
         }
 
         UpdateToInput();
 
-        _currentState = State.ReceivingInput;
+        _currentState = State.IntroAnimation;
     }
 
     public void EndRound()
@@ -275,6 +282,26 @@ public class SushiManager : MonoBehaviour
         }
 
         _UITickets[_backOfList].AssignTicket(GenerateTicket());
+    }
+
+    private void IntroAnimateTickets()
+    {
+        _initialAnimT += Time.deltaTime;
+
+        foreach (UTicketUI _ticket in _UITickets)
+        {
+            _ticket.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(Mathf.SmoothStep(_ticketPoints[_ticket.IndexInList].anchoredPosition.x + 900f, _ticketPoints[_ticket.IndexInList].anchoredPosition.x, _initialAnimT), _ticketPoints[_ticket.IndexInList].anchoredPosition.y);
+        }
+
+        if ( Mathf.Abs(_UITickets[0].GetComponent<RectTransform>().anchoredPosition.x - _ticketPoints[0].anchoredPosition.x) <= 10f)
+        {
+            foreach (UTicketUI _ticket in _UITickets)
+            {
+                _ticket.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(_ticketPoints[_ticket.IndexInList].anchoredPosition.x, _ticketPoints[_ticket.IndexInList].anchoredPosition.y);
+            }
+
+            _currentState = State.ReceivingInput;
+        }
     }
 
     private bool AnimateTickets()
