@@ -10,6 +10,6 @@ public class LevelData : ScriptableObject
     public float m_timeLimit;
 
     [Tooltip("A list of all available ingredients in this level.")]
-    public EIngredient[] m_availableIngredients;
+    public List<EIngredient> m_availableIngredients;
 
 }

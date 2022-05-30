@@ -14,10 +14,16 @@ public class GameFlowManager : MonoBehaviour
 
     public EIngredient[] m_currentActiveIngredients;
 
+    public SushiManager m_sushiManager;
+
     [Tooltip("An array that contains all of the different level data.")]
     public LevelData[] m_levelData;
 
+    public LevelData m_currentLevel;
+
     public GameTimer m_gameTimer;
+
+    public CanvasGroup m_timerCanvas;
 
     public UIManager m_uiManager;
 
@@ -29,21 +35,32 @@ public class GameFlowManager : MonoBehaviour
 
     public CanvasGroup m_mainMenuCanvas;
 
+    public bool m_hasNavigated = false;
+
     #endregion
+
+    [Header("Music")]
+
+    public AudioSource m_gameMusicSource;
+
+    public AudioClip m_menuMusic;
+
+    public AudioClip m_gameMusic;
+
+
 
     private void Start( )
     {
 
+        EventManager.m_eventManager.onMenuAnimationComplete += EnterNewState;
+
+        m_currentGameState = GameState.inMainMenu;
 
     }
 
-    public void LoadLevel(LevelData levelToLoad )
+    public void LoadLevel( int levelIndex )
     {
-        //Sets the time remaining on the timer to the time limit of the level data passed in
-        m_gameTimer.m_timeRemaining = levelToLoad.m_timeLimit;
-
-        //Sets the available ingredients to that of the level data passed in
-        m_currentActiveIngredients = levelToLoad.m_availableIngredients;
+        m_currentLevel = m_levelData[levelIndex];
 
     }
 
@@ -86,7 +103,31 @@ public class GameFlowManager : MonoBehaviour
     public void EnterMainMenu( )
     {
 
-        
+        switch ( m_currentGameState )
+        {
+            case ( GameState.inOptions ):
+                {
+                    m_uiManager.ExitOptionsMenu( );
+                    break;
+                }
+            case ( GameState.inLevelSelection ):
+                {
+                    m_uiManager.ExitLevelSelect( );
+                    break;
+                }
+            case ( GameState.inPauseMenu ):
+                {
+                    //Do stuff
+                    break;
+                }
+            default:
+                {
+                    Debug.LogError( "No transition found!" );
+                    break;
+                }
+        }
+
+        m_currentGameState = GameState.inMainMenu;
 
     }
 
@@ -97,32 +138,64 @@ public class GameFlowManager : MonoBehaviour
 
         m_currentGameState = GameState.inOptions;
 
+        m_hasNavigated = true;
+
     }
 
-    public void EnterNewMenu( )
+    public void EnterLevelSelect( )
     {
-        switch ( m_currentGameState )
+        m_uiManager.ExitMainMenu( );
+
+        m_currentGameState = GameState.inLevelSelection;
+
+        m_hasNavigated = true;
+    }
+
+    public void PlayGame( )
+    {
+
+        m_uiManager.ExitMainMenu( );
+
+        m_currentGameState = GameState.inGame;
+
+    }
+
+    private void EnterNewState( string id )
+    {
+        if ( m_hasNavigated )
         {
-            case GameState.inMainMenu:
-                {
 
-                    break;
-                }
-            case GameState.inOptions:
-                {
-                    //m_uiManager.EnterOptionsMenu( );
-                    break;
-                }
-            case GameState.inLevelSelection:
-                {
+            switch ( m_currentGameState )
+            {
+                case ( GameState.inMainMenu ):
+                    {
+                        m_uiManager.EnterMainMenu( );
 
-                    break;
-                }
-            case GameState.inPauseMenu:
-                {
+                        break;
+                    }
+                case ( GameState.inOptions ):
+                    {
+                        m_uiManager.EnterOptionsMenu( );
+                        break;
+                    }
+                case ( GameState.inLevelSelection ):
+                    {
+                        m_uiManager.EnterLevelSelect( );
+                        break;
+                    }
+                case ( GameState.inGame ):
+                    {
+                        m_gameMusicSource.clip = m_gameMusic;
 
-                    break;
-                }
+                        m_gameMusicSource.Play( );
+
+                        m_uiManager.ToggleCanvasGroup( true , m_timerCanvas );
+
+                        m_sushiManager.BeginRound( m_currentLevel.m_availableIngredients );
+                        break;
+                    }
+            }
+            
         }
     }
 
