@@ -22,6 +22,14 @@ public class UTicketUI : MonoBehaviour
 
     private Dictionary<EIngredient, Sprite> _TextureMap = new Dictionary<EIngredient, Sprite>();
 
+    public void Start()
+    {
+        foreach (FIngredientSprites spriteMap in GameData.IngredientSprites)
+        {
+            _TextureMap.Add(spriteMap.Ingredient, spriteMap.Icon);
+        }
+    }
+
     public void Initialise(int Index)
     {
         TicketCG.blocksRaycasts = false;
@@ -31,11 +39,6 @@ public class UTicketUI : MonoBehaviour
         foreach (FIngredientUIElement IngredientEntry in IngredientUIList)
         {
             IngredientEntry.HideIngredientInfo();
-        }
-
-        foreach (FIngredientSprites spriteMap in GameData.IngredientSprites)
-        {
-            _TextureMap.Add(spriteMap.Ingredient, spriteMap.Icon);
         }
 
         IndexInList = Index;

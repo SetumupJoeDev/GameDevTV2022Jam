@@ -319,7 +319,11 @@ public class SushiManager : MonoBehaviour
                         MovingT = 0f;
 
                         AdvanceTickets();
-                        _UITickets[_backOfList].TicketAnimator.SetTrigger("ResetTicket");
+
+                        foreach(UTicketUI _ticket in _UITickets)
+                        {
+                            _ticket.TicketAnimator.SetTrigger("ResetTicket");
+                        }
                     }
                 }
                 else if(trans.anchoredPosition.x == _ticketPoints[ticket.IndexInList].anchoredPosition.x)
