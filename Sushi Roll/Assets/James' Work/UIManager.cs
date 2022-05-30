@@ -55,6 +55,11 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void HideTimeUpText( )
+    {
+        m_timeUpText.SetActive( false );
+    }
+
     public void ToggleCanvasGroup( bool enabled, CanvasGroup canvas )
     {
         if ( enabled )
@@ -64,6 +69,8 @@ public class UIManager : MonoBehaviour
 
             //Sets the canvas to be interactable so any buttons or sliders can be used by the player
             canvas.interactable = true;
+
+            canvas.blocksRaycasts = true;
         }
         else
         {
@@ -72,6 +79,8 @@ public class UIManager : MonoBehaviour
 
             //Sets the canvas to not be interactable so buttons and sliders cannot be used
             canvas.interactable = false;
+
+            canvas.blocksRaycasts = false;
         }
     }
 

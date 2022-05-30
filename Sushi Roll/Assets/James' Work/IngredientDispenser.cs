@@ -17,6 +17,10 @@ public class IngredientDispenser : MonoBehaviour
     [SerializeField]
     private Animator _handleAnimator;
 
+    public AudioClip m_dispenserLeverSFX;
+
+    public AudioClip m_ingredientDispensed;
+
     private void Start()
     {
         //Subscribes the DispenseIngredient method to the onKeyPress event so that when the correct key is pressed, this dispenser will activate
@@ -40,7 +44,11 @@ public class IngredientDispenser : MonoBehaviour
 
                     ingredient.SetActive(true);
 
+                    EventManager.m_eventManager.SFXPlay( m_ingredientDispensed );
+
                     _handleAnimator.SetTrigger("Pull");
+
+                    EventManager.m_eventManager.SFXPlay( m_dispenserLeverSFX );
 
                     //Returns out of the method to avoid spawning multiple ingredients
                     return;
